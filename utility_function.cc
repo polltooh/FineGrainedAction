@@ -109,14 +109,5 @@ std::vector<std::string> utility::SplitString(std::string video_name){
 
 
 bool utility::FileExist(std::string file_name){
-    bool is_exist = false;
-    FILE *fp = fopen(file_name.c_str(), "r");
-    if (fp == nullptr){
-        is_exist = false;
-     }
-    else {
-        is_exist = true;
-    }
-    fclose(fp); 
-    return is_exist;
+    return boost::filesystem::exists(file_name);
 }

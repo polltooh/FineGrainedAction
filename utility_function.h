@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
+#include <boost/filesystem.hpp>
 
 const int LEFT_KEY = 63234;
 const int RIGHT_KEY = 63235;

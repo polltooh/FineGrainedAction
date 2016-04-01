@@ -1,0 +1,240 @@
+1	Acrobatics:Acro dance
+2	Acrobatics:Acrobalance
+3	Acrobatics:Acroyoga
+4	Acrobatics:Aerial hoop
+5	Acrobatics:Aerial silk
+6	Acrobatics:Juggling
+7	Acrobatics:Pole dance
+8	Aerobatics:Spin
+9	Aggressive inline skating:Grind
+10	Alpine skiing:Downhill
+11	Alpine skiing:Giant slalom
+12	Alpine skiing:Para-alpine skiing
+13	American football:Field goal
+14	American football:Interception
+15	American football:Kickoff
+16	American football:Touchdown
+17	Artistic gymnastics:Trampoline
+18	Association football:Direct free kick
+19	Association football:Dribbling
+20	Association football:Goal
+21	Association football:Kick
+22	Association football:Penalty kick
+23	Association football:Training
+24	Australian rules football:Kick
+25	Australian rules football:Mark
+26	Auto racing:Burnout
+27	Auto racing:Formula One
+28	BMX:Bunny hop
+29	BMX:Flatland BMX
+30	BMX:Tailwhip
+31	Backpacking:Bushcraft
+32	Backpacking:Camping
+33	Backpacking:Cooking
+34	Backpacking:Hammock camping
+35	Barrel racing:Calf roping
+36	Barrel racing:Pole bending
+37	Baseball:Batting
+38	Baseball:Bench-clearing brawl
+39	Baseball:Curveball
+40	Baseball:Fastball
+41	Baseball:Foul ball
+42	Baseball:Hit
+43	Baseball:Run
+44	Baseball:Save
+45	Baseball:Stolen base
+46	Baseball:Strikeout
+47	Baseball:Throwing
+48	Baseball:Walk-off home run
+49	Basketball:Alley-oop
+50	Basketball:Assist
+51	Basketball:Basketball
+52	Basketball:Block
+53	Basketball:Dribbling
+54	Basketball:Free throw
+55	Basketball:Jump shot
+56	Basketball:Layup
+57	Basketball:Point
+58	Basketball:Slam dunk
+59	Basketball:Three-point field goal
+60	Bodybuilding:Flex
+61	Bodybuilding:Posedown
+62	Bowling:Strike
+63	Bull riding:Bucking
+64	Bull riding:Steer riding
+65	Calisthenics:Pull-up
+66	Calisthenics:Push-up
+67	Climbing:Big wall climbing
+68	Climbing:Fontainebleau rock climbing
+69	Climbing:Indoor climbing
+70	Climbing:Solo climbing
+71	Climbing:Stair climbing
+72	Climbing:Tree climbing
+73	Cricket:Batting
+74	Cricket:Caught
+75	Cricket:Fielding
+76	Cricket:Run
+77	Cricket:Run out
+78	CrossFit:Deadlift
+79	CrossFit:Handstand
+80	CrossFit:Lunge
+81	CrossFit:Push press
+82	CrossFit:Sit-up
+83	CrossFit:Snatch
+84	CrossFit:Squat
+85	Dressage:Half-pass
+86	Dressage:Leg-yield
+87	Dressage:Musical kur
+88	Dressage:Shoulder-in
+89	Equestrianism:Bareback riding
+90	Equestrianism:Horse jumping obstacles
+91	Equestrianism:Therapeutic horseback riding
+92	Equestrianism:Trick riding
+93	Fencing:Attack
+94	Fencing:Parry
+95	Figure skating:Camel spin
+96	Figure skating:Figure skating jumps
+97	Figure skating:Layback spin
+98	Figure skating:Lutz jump
+99	Figure skating:Sit spin
+100	Figure skating:Toe loop jump
+101	Floor:Handspring
+102	Floor:Roundoff
+103	Freestyle BMX:Stunt
+104	Freestyle Motocross:Stunt
+105	Freestyle football:Crip Walk
+106	Freestyle football:Nutmeg
+107	Freestyle football:Rainbow kick
+108	Freestyle swimming:Flutter kick
+109	Freestyle swimming:Tumble turn
+110	Gliding:Dynamic soaring
+111	Gliding:Landing
+112	Grappling:Chokehold
+113	Grappling:Guard
+114	Grappling:Guillotine choke
+115	Grappling:Knee
+116	Grappling:Leglock
+117	Grappling:Mount
+118	Grappling:Rear naked choke
+119	Gymnastics:Backbend
+120	Gymnastics:Trampoline
+121	Handball:Penalty kick
+122	Hockey:Wrist shot
+123	Ice hockey:Combat
+124	Ice hockey:Goal
+125	Ice hockey:Penalty shot
+126	Ice hockey:Power play
+127	Ice hockey:Shot
+128	Ice hockey:Slapshot
+129	Ice skating:Salchow jump
+130	Judo:Sweep
+131	Jujutsu:Armlock
+132	Jujutsu:Pressure point
+133	Karate:Self-defense
+134	Knife throwing:Throwing
+135	Longboarding:Bearing
+136	Longboarding:Kickflip
+137	Longboarding:Pump
+138	Longboarding:Slide
+139	Motocross:Holeshot
+140	Motocross:Whip
+141	Off-road racing:Hillclimbing
+142	Offshore powerboat racing:Poker run
+143	One Day International:Batting
+144	One Day International:Caught
+145	One Day International:Run out
+146	Paintball:Shooting
+147	Parachuting:Accelerated freefall
+148	Parachuting:Canopy piloting
+149	Parachuting:Cut-away
+150	Parachuting:Free fall
+151	Paragliding:Towing
+152	Parkour:Free Running
+153	Parkour:Wall flip
+154	Parkour:Wallflip
+155	Physical fitness:Abdominal exercise
+156	Physical fitness:Buttocks
+157	Physical fitness:Suspension training
+158	Physical fitness:Zumba
+159	Pilates:Abdominal exercise
+160	Pilates:Foam rolling
+161	Pilates:Hatha yoga
+162	Pilates:Stott Pilates
+163	Powerbocking:Jumping
+164	Powered paragliding:Takeoff
+165	Powerlifting:Bench press
+166	Powerlifting:Squat
+167	Rallying:Hillclimbing
+168	Reining:Cutting
+169	Rings:Pull-up
+170	Rock climbing:Belaying
+171	Rock climbing:Lead climbing
+172	Rodeo:Breakaway roping
+173	Rodeo:Pole bending
+174	Rodeo:Team roping
+175	Roller hockey:Goal
+176	Roller in-line hockey:Goal
+177	Roller skating:Powerslide
+178	Rugby union:Line-out
+179	Rugby union:Scrum
+180	Rugby union:Try
+181	Skateboarding:Flip trick
+182	Skateboarding:Frontside
+183	Skateboarding:Heelflip
+184	Skateboarding:Kickflip
+185	Skateboarding:Nollie
+186	Skateboarding:Slide
+187	Slamball:Slam dunk
+188	Softball:Bunt
+189	Softball:Hit
+190	Softball:Home run
+191	Softball:Slap bunt
+192	Softball:Strikeout
+193	Street hockey:Goal
+194	Street racing:Burnout
+195	Street racing:Traffic collision
+196	Streetball:Crossover dribble
+197	Streetball:Dribbling
+198	Streetball:Jump shot
+199	Streetball:Slam dunk
+200	Strength athletics:Deadlift
+201	Strength athletics:Squat
+202	Table tennis:Backspin
+203	Table tennis:Hardbat
+204	Table tennis:Rally
+205	Tee Ball:At bat
+206	Tee Ball:Batting
+207	Ten-pin bowling:Hook
+208	Ten-pin bowling:Spare
+209	Ten-pin bowling:Split
+210	Tennis:Backhand
+211	Tennis:Forehand
+212	Tennis:Serve
+213	Tennis:Topspin
+214	Tennis:Volley
+215	Test cricket:Delivery
+216	Test cricket:Run
+217	Test cricket:Sledging
+218	Trapeze:Aerial hoop
+219	Trapeze:Burlesque
+220	Trapeze:Dance
+221	Tumbling:Handspring
+222	Tumbling:Roundoff
+223	Tumbling:Stunt
+224	Ultimate:Throwing
+225	Ultralight aviation:Takeoff
+226	Volleyball:Volleyball jump serve
+227	Volleyball:Volleyball spiking
+228	Water polo:Goal
+229	Weight training:Bench press
+230	Weight training:Bent-over row
+231	Weight training:Dumbbell
+232	Weight training:Dumbbell Bench-press
+233	Weight training:Fly
+234	Weight training:Lying triceps extensions
+235	Weight training:Power cage
+236	Weight training:Pulldown exercise
+237	Weight training:Row
+238	Weight training:Squat
+239	Windsurfing:Front loop
+240	Women's lacrosse:Goal

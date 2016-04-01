@@ -84,8 +84,6 @@ int main(int argc, char* argv[]){
             index = std::max(0, index);
             index = std::min((int)name_list.size() - 1, index);
 
-            std::cout<<index<<std::endl;
-
             std::string image_file_name = image_dir_name + name_list[index];
             cv::Mat image = cv::imread(image_file_name);
             utility::AddText(image, label_name, label_list[index]);

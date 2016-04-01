@@ -36,6 +36,6 @@ if __name__ == "__main__":
         url = sys.argv[2]
     else:
         print("Usage download_video label url")
-        return
+        exit(1)
 
     download_single_video(label, url)

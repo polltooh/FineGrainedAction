@@ -1,5 +1,6 @@
 from pytube import YouTube
 import string
+import sys
 import os
 
 def download_single_video(label, video_url):
@@ -30,4 +31,11 @@ def download_single_video(label, video_url):
 
 
 if __name__ == "__main__":
-    download_single_video("nba_dunk", "https://www.youtube.com/watch?v=A2IMbbRdlsI")
+    if (len(sys.argv) == 3):
+        label = sys.argv[1]
+        url = sys.argv[2]
+    else:
+        print("Usage download_video label url")
+        return
+
+    download_single_video(label, url)

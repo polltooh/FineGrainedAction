@@ -4,6 +4,8 @@ project( AnnotVideo )
 find_package( OpenCV REQUIRED )
 find_package( Boost COMPONENTS system filesystem REQUIRED)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 file(GLOB annot_cc
     "*.cc"
 )

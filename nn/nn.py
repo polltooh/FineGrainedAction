@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 def weight_variable(shape):
     initial = tf.truncated_normal(shape = shape, 

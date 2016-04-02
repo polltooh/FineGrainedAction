@@ -1,8 +1,8 @@
 #include "utility_function.h"
 
-void utility::UpdateLabel(std::vector<bool>& label_list, bool key, int index){
-   while(index < label_list.size() && label_list[index] != key){
-        label_list[index] = key;
+void utility::UpdateLabel(std::vector<bool>& label_list, bool label, int index){
+   while(index < label_list.size() && label_list[index] != label){
+        label_list[index] = label;
         index ++;
    }
 }
@@ -92,6 +92,30 @@ void utility::KeyBehavior(int& key, bool& label, int& index,
     }
     else{
         move_factor = 1;
+    }
+}
+
+void utility::KeyBehavior(int& key, bool& label, int& index, 
+    bool& update_label, bool& stop){
+
+    update_label = false;
+
+    switch (char(key)){
+        case 'a':
+            label = true; update_label = true;
+            break;
+        case 's':
+            label = false; update_label = true;
+            break;
+        case char(RIGHT_KEY):
+            index++;
+            break;
+        case char(LEFT_KEY):
+            index--;
+            break;
+        case 'q':
+            stop = true;
+            break;
     }
 }
 

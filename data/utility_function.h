@@ -33,6 +33,7 @@ void KeyBehavior(int& key, bool& label, int& index,bool& if_rolling,
 std::vector<std::string> SplitString(std::string video_name);
 
 bool FileExist(std::string file_name);
+std::vector<std::string> FileInDir(std::string dir_name);
 
 }
 #endif

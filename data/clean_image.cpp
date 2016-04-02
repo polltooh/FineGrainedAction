@@ -13,21 +13,14 @@ int main(int argc, char* argv[]){
         std::cout<<"Usage: CleanImage image_folder_name"<<std::endl;
         return 0;
     }
-    std::string dir_path = "/Users/Geoff/Documents/FineGrainedAction";
-    std::cout<<boost::filesystem::exists(dir_path)<<std::endl;
-    exit(1);
+    std::string image_dir = argv[1];
+    std::cout<<boost::filesystem::exists(image_dir)<<std::endl;
 
+    std::cout<<image_dir_name<<std::endl;
+    std::string file_list_name = image_dir_name + "file_list.txt";
+    std::system("ls " + image_dir_name + " > " + file_list_name);
 
-    // std::string image_dir_name = argv[1];
-    // if (image_dir_name[image_dir_name.size() - 1] != "/"){
-    //     image_dir_name += "/";
-    // }
-    // 
-    // std::cout<<image_dir_name<<std::endl;
-    // std::string file_list_name = image_dir_name + "file_list.txt";
-    // std::system("ls " + image_dir_name + " > " + file_list_name);
-
-    // bool image_exist = utility::FileExist(file_list_name);
+    bool image_exist = utility::FileExist(file_list_name);
 
     // if (!image_exist){
     //     std::ofstream output_file(file_list_name.c_str());

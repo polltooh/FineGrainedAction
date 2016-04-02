@@ -111,3 +111,17 @@ std::vector<std::string> utility::SplitString(std::string video_name){
 bool utility::FileExist(std::string file_name){
     return boost::filesystem::exists(file_name);
 }
+
+std::vector<std::string> utility::FileInDir(std::string dir_name){
+    std::vector<std::string> file_name_list;
+    boost::filesystem::path p(dir_name);
+    boost::filesystem::directory_iterator end_itr;
+    for (boost::filesystem::directory_iterator itr(p); itr != end_itr; ++itr){
+        if (is_regular_file(itr->path())) {
+            std::string current_file = itr->path().string();
+            file_name_list.push_back(current_file);
+            std::cout << current_file << std::endl;
+        }
+    }
+    return file_name_list;
+}

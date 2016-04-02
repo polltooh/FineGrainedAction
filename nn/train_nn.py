@@ -5,6 +5,9 @@ import numpy as np
 import os
 import cv2
 
+# the dimension of the final layer = feature dim
+NN_DIM = 100
+
 def read_image(path = 'download.jpg'):
     batch_size  = 500
     scale_size  = 258
@@ -35,29 +38,32 @@ def read_image(path = 'download.jpg'):
 def train():
     img = read_image()
     
-    test_data_1 = tf.placeholder(tf.float32, shape=(1, 227, 227, 3))
-    test_data_2 = tf.placeholder(tf.float32, shape=(1, 227, 227, 3))
+    image_data_ph = tf.placeholder(tf.float32, shape=(1, 227, 227, 3))
+
+    infer_ph_1 = tf.placeholder(tf.float32, shape=(1, NN_DIM))
+    infer_ph_2 = tf.placeholder(tf.float32, shape=(1, NN_DIM))
 
     global_step = tf.Variable(0, name = 'global_step', trainable = False)
 
-    net_1 = AlexNet({'data':test_data_1})
-    infer_1 = nn.inference( net_1.get_output())
-    # net_2 = AlexNet({'data':test_data_2})
-    infer_2 = nn.inference( net_1.get_output())
-    label = tf.constant(1) 
-    loss = nn.triplet_loss(infer_1, infer_2, label)
+    net = AlexNet({'data':image_data_ph})
+    infer = nn.inference(net.get_output(), NN_DIM)
 
-    training_op = nn.training(loss, 0.5, global_step)
+    label = 1
+    loss = nn.triplet_loss(infer_ph_1, infer_ph_2, label)
+    # training_op = nn.training(loss, 0.5, global_step)
 
     sess = tf.Session()
 
     init_op = tf.initialize_all_variables()
     sess.run(init_op)
-    net_1.load('bvlc_alexnet.npy', sess)
-    # net_2.load('bvlc_alexnet.npy', sess)
-    feed_data = {test_data_1: img, test_data_2:img}
-    _, loss_v = sess.run([training_op, loss], feed_dict = feed_data)
-    # loss_v = sess.run([loss], feed_dict = feed_data)
+    net.load('bvlc_alexnet.npy', sess)
+
+    feed_data = {image_data_ph: img}
+    infer_1_v = sess.run(infer, feed_dict = feed_data)
+    feed_data = {image_data_ph: img}
+    infer_2_v = sess.run(infer, feed_dict = feed_data)
+    feed_data = {infer_ph_1: infer_1_v, infer_ph_2: infer_2_v}
+    loss_v = sess.run([loss], feed_dict = feed_data) 
     print(loss_v)
 
 def main(argv = None):

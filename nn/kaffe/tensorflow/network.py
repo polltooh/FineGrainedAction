@@ -50,7 +50,6 @@ class Network(object):
         assert len(args)!=0
         self.inputs = []
         for layer in args:
-            print(layer)
             if isinstance(layer, basestring):
                 try:
                     layer = self.layers[layer]

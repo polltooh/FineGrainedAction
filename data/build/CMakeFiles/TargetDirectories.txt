@@ -1,2 +1,2 @@
-/home/mscvadmin/action/FineGrainedAction/data/build/CMakeFiles/AnnotVideo.dir
-/home/mscvadmin/action/FineGrainedAction/data/build/CMakeFiles/CleanImage.dir
+/Users/Geoff/Documents/FineGrainedAction/data/build/CMakeFiles/CleanImage.dir
+/Users/Geoff/Documents/FineGrainedAction/data/build/CMakeFiles/AnnotVideo.dir

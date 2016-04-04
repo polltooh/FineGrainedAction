@@ -22,7 +22,22 @@ int main(int argc, char* argv[]){
         std::cout<< image_dir + " does not exist"<<std::endl;
         return 0;
     }
-
+    else{
+        std::cout<<"Are you sure you want to delete filesd in " + image_dir << " [y/n]"<<std::endl;
+        char sure = 'n';
+        std::cin >> sure;
+        if (sure == 'n') {
+            std::cout<<"undeleted"<<std::endl;
+            return 0;
+        }
+        else if(sure == 'y'){
+            std::cout<<"deleting"<<std::endl;
+        }
+        else{
+            std::cout<<"unknown command"<<std::endl;
+            return 0;
+        }
+    }
     if (image_dir[image_dir.size()-1] != '/'){
         image_dir += '/';
     }
@@ -55,4 +70,10 @@ int main(int argc, char* argv[]){
     }
     std::cout<<delete_count<<std::endl;
 
+    if(utility::FileExist(label_list_name)){
+        std::remove(label_list_name.c_str());
+    }
+    if(utility::FileExist(label_list_cp_name)){
+        std::remove(label_list_cp_name.c_str());
+    }
 }

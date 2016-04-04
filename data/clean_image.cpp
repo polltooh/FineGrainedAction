@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
     if (image_dir[image_dir.size()-1] != '/'){
         image_dir += '/';
     }
-    
+        
     std::vector<std::string> split_name = utility::SplitString(image_dir); 
 
     std::vector<std::string> file_list = utility::FileInDir(image_dir);

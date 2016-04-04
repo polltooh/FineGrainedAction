@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
 #include <string>
@@ -9,6 +11,7 @@
 #include "utility_function.h"
 
 int main(int argc, char* argv[]){
+
     if (argc < 2){
         std::cout<<"Usage: CleanImage image_folder_name"<<std::endl;
         return 0;
@@ -30,6 +33,7 @@ int main(int argc, char* argv[]){
     
     std::string label_list_name = image_dir + "label.txt";
     std::string label_list_cp_name = image_dir + "label_cp.txt";
+    
 
     std::vector<bool> label_list(file_list.size(), true);
 
@@ -42,44 +46,13 @@ int main(int argc, char* argv[]){
             count++;
         }
     }
-
-    std::string label_name = split_name[split_name.size()-1];
-    bool label = true;
-    bool stop = false;
-    bool update_label = false;
-    int index = 0;
-    while(1){
-        if(stop) break;
-        index = std::max(0, index);
-        index = std::min((int)label_list.size() - 1, index);
-        label = label_list[index];
-        cv::Mat image = cv::imread(file_list[index]);
-        cv::Mat resized_image;
-
-        if (!image.data){
-           resized_image = cv::Mat::zeros(400, 400, CV_32F);
+    int delete_count = 0;
+    for (int i = 0; i < file_list.size(); ++i){
+        if (label_list[i] == false){
+            delete_count ++;
+            std::remove(file_list[i].c_str());
         }
-        else{
-            cv::resize(image, resized_image, cv::Size(400,400));
-        }
-
-        utility::AddText(resized_image, label_name, label_list[index]);
-        utility::AddFrameText(resized_image, index);
-
-        cv::imshow("test", resized_image);
-        int key = cv::waitKey(0);
-        utility::KeyBehavior(key, label, index, update_label, stop);
-
-        if (update_label && index >= 0 && index < label_list.size()){
-            label_list[index] = label;
-        }
-        
-        if (index != 0 && (index % 50 == 1)) 
-            utility::WriteToTxt(label_list_cp_name, label_list);
     }
-    
-    utility::WriteToTxt(label_list_name, label_list);
+    std::cout<<delete_count<<std::endl;
 
-    return 0;
 }
-

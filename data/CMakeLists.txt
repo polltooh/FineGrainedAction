@@ -29,3 +29,14 @@ target_link_libraries( CleanImage
                         ${Boost_FILESYSTEM_LIBRARY} 
                         ${Boost_SYSTEM_LIBRARY}
                      )
+
+project(DeleteImage)
+
+add_executable( DeleteImage delete_image.cpp
+                            ${annot_cc})
+
+target_link_libraries( DeleteImage
+                        ${OpenCV_LIBS}
+                        ${Boost_FILESYSTEM_LIBRARY} 
+                        ${Boost_SYSTEM_LIBRARY}
+                     )

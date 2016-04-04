@@ -38,5 +38,7 @@ std::vector<std::string> SplitString(std::string video_name);
 bool FileExist(std::string file_name);
 std::vector<std::string> FileInDir(std::string dir_name);
 
+inline bool StrEndWith(std::string filename, std::string extension);
+
 }
 #endif

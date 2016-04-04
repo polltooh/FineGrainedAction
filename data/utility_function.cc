@@ -143,9 +143,21 @@ std::vector<std::string> utility::FileInDir(std::string dir_name){
     for (boost::filesystem::directory_iterator itr(p); itr != end_itr; ++itr){
         if (is_regular_file(itr->path())) {
             std::string current_file = itr->path().string();
-            file_name_list.push_back(current_file);
-            std::cout << current_file << std::endl;
+            if (StrEndWith(current_file, "jpg") || StrEndWith(current_file, "png")
+                ||StrEndWith(current_file, "jpeg"))
+
+                file_name_list.push_back(current_file);
+            else
+                std::cout<<current_file<<std::endl;
         }
     }
     return file_name_list;
+}
+
+inline bool utility::StrEndWith(std::string filename, std::string extension){
+    if (filename.size() < extension.size()) return false;
+    if (strcasecmp(filename.substr(filename.size() - extension.size()).c_str(), extension.c_str())) return true; 
+    //if (filename.substr(filename.size() - extension.size()) == extension) return true;
+    else return false;
+
 }

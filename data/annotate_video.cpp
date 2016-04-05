@@ -44,6 +44,7 @@ int main(int argc, char* argv[]){
             char buffer[30];
             sprintf(buffer, "%08d.jpg",index);
             std::string bfs(buffer);
+
             std::string f_name = image_dir_name + bfs;
             std::cout<<f_name<<std::endl;
             cv::imwrite(f_name,frame);

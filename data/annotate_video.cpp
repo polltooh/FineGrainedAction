@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "utility_function.h"
+#include "img_uti.h"
 
 int main(int argc, char* argv[]){
     if (argc < 2){
@@ -41,6 +42,9 @@ int main(int argc, char* argv[]){
             cv::Mat frame;
             cap >> frame;
             if(frame.empty()) break;
+            
+            frame = img_uti::CropResize(frame, 256);
+
             char buffer[30];
             sprintf(buffer, "%08d.jpg",index);
             std::string bfs(buffer);

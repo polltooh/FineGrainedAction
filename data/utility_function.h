@@ -33,9 +33,15 @@ void WriteToTxt(std::string file_name, std::vector<bool>& list);
 template<>
 void WriteToTxt(std::string file_name, std::vector<std::pair<std::string, bool>>& list);
 
-template<typename T1, typename T2, typename T3>
-void InsertToPair(std::vector<std::pair<T1, T2>>& name_list,
-        std::vector<T3>& name);
+// template<typename T1, typename T2, typename T3>
+// void InsertToPair(std::vector<std::pair<T1, T2>>& name_list,
+//         std::vector<T3>& name);
+
+void InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
+        std::vector<bool>& insert_list);
+
+void InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
+        std::vector<std::string>& insert_list);
 
 void KeyBehavior(int& key, bool& label, int& index,bool& if_rolling, 
     bool& roll_direction, bool& update_list, bool& stop, int& move_factor);
@@ -50,6 +56,26 @@ std::vector<std::string> ImageInDir(std::string dir_name);
 inline bool StrEndWith(std::string filename, std::string extension);
 
 }
+
+// template<>
+// void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
+//         std::vector<bool>& insert_list){
+//     // make sure the size are the same
+//     assert(pair_list.size() == insert_list.size());
+//     for (size_t i = 0; i < pair_list.size(); ++i){
+//            pair_list[i].second = insert_list[i];
+//     }
+// }
+// 
+// template<>
+// void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
+//         std::vector<std::string>& insert_list){
+//     // make sure the size are the same
+//     assert(pair_list.size() == insert_list.size());
+//     for (size_t i = 0; i < pair_list.size(); ++i){
+//            pair_list[i].first = insert_list[i];
+//     }
+// }
 
 inline bool utility::StrEndWith(std::string filename, std::string extension){
     if (filename.size() < extension.size()) return false;

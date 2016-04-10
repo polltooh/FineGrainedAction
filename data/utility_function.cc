@@ -28,7 +28,7 @@ void utility::AddFrameText(cv::Mat& image, int index){
 }
 
 template <typename T>
-void utility::WriteToTxt(std::string file_name, std::vector<T> list){
+void utility::WriteToTxt(std::string file_name, std::vector<T>& list){
 
     std::ofstream output_file((file_name).c_str());
 
@@ -38,12 +38,43 @@ void utility::WriteToTxt(std::string file_name, std::vector<T> list){
 }
 
 template <>
-void utility::WriteToTxt(std::string file_name, std::vector<bool> list){
+void utility::WriteToTxt(std::string file_name, std::vector<bool>& list){
 
     std::ofstream output_file((file_name).c_str());
 
     for (int i = 0; i < list.size(); ++i){
         output_file << std::string(list[i] ? "true": "false")<<'\n';
+    }
+}
+
+template <>
+void utility::WriteToTxt(std::string file_name, 
+        std::vector<std::pair<std::string, bool>>& list){
+
+    std::ofstream output_file((file_name).c_str());
+
+    for (int i = 0; i < list.size(); ++i){
+        output_file << list[i].first << " ";
+        output_file << std::string(list[i].second ? "true": "false")<<'\n';
+    }
+}
+
+template<>
+void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
+        std::vector<bool>& insert_list){
+    // make sure the size are the same
+    assert(pair_list.size() == insert_list.size());
+    for (size_t i = 0; i < pair_list.size(); ++i){
+           pair_list[i].second = insert_list[i];
+    }
+}
+template<>
+void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
+        std::vector<std::string>& insert_list){
+    // make sure the size are the same
+    assert(pair_list.size() == insert_list.size());
+    for (size_t i = 0; i < pair_list.size(); ++i){
+           pair_list[i].first = insert_list[i];
     }
 }
 
@@ -136,7 +167,7 @@ bool utility::FileExist(std::string file_name){
     return boost::filesystem::exists(file_name);
 }
 
-std::vector<std::string> utility::FileInDir(std::string dir_name){
+std::vector<std::string> utility::ImageInDir(std::string dir_name){
     std::vector<std::string> file_name_list;
     boost::filesystem::path p(dir_name);
     boost::filesystem::directory_iterator end_itr;
@@ -144,20 +175,24 @@ std::vector<std::string> utility::FileInDir(std::string dir_name){
         if (is_regular_file(itr->path())) {
             std::string current_file = itr->path().string();
             if (StrEndWith(current_file, "jpg") || StrEndWith(current_file, "png")
-                ||StrEndWith(current_file, "jpeg"))
-
+                ||StrEndWith(current_file, "jpeg")){
                 file_name_list.push_back(current_file);
-            else
-                std::cout<<current_file<<std::endl;
+            }
         }
     }
     return file_name_list;
 }
 
-inline bool utility::StrEndWith(std::string filename, std::string extension){
-    if (filename.size() < extension.size()) return false;
-    if (strcasecmp(filename.substr(filename.size() - extension.size()).c_str(), extension.c_str())) return true; 
-    //if (filename.substr(filename.size() - extension.size()) == extension) return true;
-    else return false;
-
+std::vector<std::string> utility::FileInDir(std::string dir_name){
+    std::vector<std::string> file_name_list;
+    boost::filesystem::path p(dir_name);
+    boost::filesystem::directory_iterator end_itr;
+    for (boost::filesystem::directory_iterator itr(p); itr != end_itr; ++itr){
+        if (is_regular_file(itr->path())) {
+            std::string current_file = itr->path().string();
+            file_name_list.push_back(current_file);
+        }
+    }
+    return file_name_list;
 }
+

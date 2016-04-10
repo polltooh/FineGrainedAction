@@ -22,7 +22,7 @@ def variable_with_weight_decay(shape, stddev, name, wd):
 def add_leaky_relu(hl_tensor, leaky_param):
     return tf.maximum(hl_tensor, tf.mul(leaky_param, hl_tensor))
 
-def inference(data, nn_dim = 1):
+def inference(data, nn_dim):
     leaky_param = tf.constant(0.01, shape = [1], name='leaky_params')
 
     dim = 1
@@ -30,27 +30,36 @@ def inference(data, nn_dim = 1):
         dim *= d
     reshape_data = tf.reshape(data, [-1, dim])
     # data is from pool5
+
     with tf.variable_scope('fc_layer1') as scope:
         #weights = weight_variable([dim,32])
-        weights = variable_with_weight_decay([dim, 100] , 0.1, 'weights', 0)
-        biases = bias_variable([100])
-        h_fc1 = tf.nn.bias_add(tf.matmul(reshape_data, weights),biases)
+        weights = variable_with_weight_decay([dim, nn_dim] , 0.1, 'weights', 0)
+        biases = bias_variable([nn_dim])
+        h_fc1 = tf.nn.bias_add(tf.matmul(reshape_data, weights), biases)
         hl_relu = add_leaky_relu(h_fc1,leaky_param)
+
     return hl_relu
 
-def triplet_loss(feature_1, feature_2, labels, radius = 1.0):
-    # label is either -1 or 1
-    pos_index = max(labels, 0)
-    neg_index = max(-labels, 0)
-    pos_loss = pos_index * tf.reduce_mean(tf.square(feature_1 - feature_2))
-    neg_loss = neg_index * tf.maximum(radius * radius, 
-               tf.reduce_mean(tf.square(feature_1 - feature_2)))
-    loss = pos_loss + neg_loss
+def triplet_loss(infer, labels, batch_size, radius = 1.0):
+    feature_1, feature_2 = tf.split(0,2,infer)
+
+    # label is either 0 or 1
+    # partition_list = tf.equal(labels,1)
+    feature_diff = tf.reduce_mean(tf.square(feature_1 - feature_2), 1)
+    feature_list = tf.dynamic_partition(feature_diff, labels, 2)
+
+    # pos_loss = tf.reduce_mean(feature_list[1])
+    pos_list = feature_list[1]
+    neg_list  = (tf.maximum(0.0, radius * radius - feature_list[0]))
+    full_list = tf.concat(0,[pos_list, neg_list])
+    loss = tf.reduce_mean(full_list)
+
     tf.add_to_collection('losses', loss)
     return tf.add_n(tf.get_collection('losses'), name = 'total_loss')
 
 def training(loss, learning_rate, global_step):
     optimizer = tf.train.AdamOptimizer(learning_rate, epsilon = 10.0)
+
     train_op = optimizer.minimize(loss, global_step = global_step)
 
     return train_op

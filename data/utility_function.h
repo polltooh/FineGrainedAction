@@ -11,10 +11,17 @@
 #include <opencv2/opencv.hpp>
 #include <boost/filesystem.hpp>
 
-const int LEFT_KEY = 63234;
-const int RIGHT_KEY = 63235;
-const int UP_KEY = 63232;
-const int DOWN_KEY = 63233;
+#ifdef __APPLE__
+    const int LEFT_KEY = 63234;
+    const int RIGHT_KEY = 63235;
+    const int UP_KEY = 63232;
+    const int DOWN_KEY = 63233;
+#else
+    const int LEFT_KEY = 1113937;
+    const int RIGHT_KEY = 1113939;
+    const int UP_KEY = 1113938;
+    const int DOWN_KEY = 1113940;
+#endif
 
 namespace utility{
 

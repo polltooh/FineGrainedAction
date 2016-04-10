@@ -37,10 +37,19 @@ def test_imagenet():
         net.load('bvlc_alexnet.npy', sesh)
         prob_v = sesh.run(net.get_output(), feed_dict={test_data:image})
         print(prob_v.shape)
-        
+
+def test_tensor():
+
+    t = tf.constant([1,1,3,3],tf.int32)
+    t1, t2 = tf.split(0, 2, t, name = 'split')
+    sess = tf.Session()
+    a_v = sess.run(t1)
+    print(a_v)
+
 
 def main():
-    test_imagenet()
+    test_tensor()
+    # test_imagenet()
 
 if __name__ == "__main__":
     main()

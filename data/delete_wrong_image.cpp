@@ -42,23 +42,28 @@ int main(int argc, char* argv[]){
         image_dir += '/';
     }
     
-    std::vector<std::string> split_name = utility::SplitString(image_dir); 
+    std::string name_list_name = image_dir + "name_list.txt";
 
-    std::vector<std::string> image_list = utility::ImageInDir(image_dir);
-    
-    std::string label_list_name = image_dir + "label.txt";
-    std::string label_list_cp_name = image_dir + "label_cp.txt";
+    std::vector<std::pair<std::string, bool>> name_list;
+    std::vector<std::string> image_list;
+    std::vector<bool> label_list;
 
-    std::vector<bool> label_list(image_list.size(), true);
-
-    if(utility::FileExist(label_list_name)){
-        std::ifstream label_file(label_list_name.c_str());
+    if (utility::FileExist(name_list_name)){
+        std::ifstream name_file(name_list_name.c_str());
         std::string line;
-        int count = 0;
-        while(getline(label_file, line)){
-            label_list[count] = (line == "true");
-            count++;
+        while(getline(name_file, line)){
+            std::istringstream line_list(line);
+            std::string image_name, label_name;
+            getline(line_list, image_name, ' ');
+            getline(line_list, label_name, ' ');
+            name_list.push_back(std::make_pair(image_name, label_name == "true"));
+            image_list.push_back(image_name);
+            label_list.push_back(label_name == "true");
         }
+    }
+    else{
+        std::cout<<"this file have not been annotated yet"<<std::endl;
+        return 0;
     }
 
     int delete_count = 0;
@@ -71,11 +76,8 @@ int main(int argc, char* argv[]){
 
     std::cout<<delete_count<<std::endl;
 
-    if(utility::FileExist(label_list_name)){
-        std::remove(label_list_name.c_str());    
+    if(utility::FileExist(name_list_name)){
+        std::remove(name_list_name.c_str());    
     }
 
-    if(utility::FileExist(label_list_cp_name)){
-        std::remove(label_list_name.c_str());    
-    }
 }

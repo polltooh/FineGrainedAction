@@ -14,17 +14,16 @@ TRAIN_TXT = 'file_list_train.txt'
 TEST_TXT = 'file_list_test.txt'
 
 TRAIN = True
-SHUFFLE_DATA = False
+SHUFFLE_DATA = True
 BATCH_SIZE = 50
 FEATURE_ROW = 227
 FEATURE_COL = 227
-LABEL_DIM = 27
 RADIUS = 10.0
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/logs',
         '''directory wherer to write event logs''')
-tf.app.flags.DEFINE_integer('max_training_iter', 10000,
+tf.app.flags.DEFINE_integer('max_training_iter', 100000,
         '''the max number of training iteration''')
 tf.app.flags.DEFINE_float('init_learning_rate',0.001,
         '''initial learning rate''')

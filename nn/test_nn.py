@@ -11,7 +11,8 @@ import math
 NN_DIM = 100
 
 TRAIN_TXT = 'file_list_train.txt'
-TEST_TXT = 'file_list_test.txt'
+# TEST_TXT = 'file_list_test.txt'
+TEST_TXT = 'file_list_train.txt'
 
 TRAIN = False
 SHUFFLE_DATA = False

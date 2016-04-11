@@ -50,12 +50,12 @@ def gen_list():
     dunk_image, dunk_frame_pos, dunk_frame_neg = get_list("nba_dunk")
     jumpshot_image, jumpshot_frame_pos, jumpshot_frame_neg = get_list("nba_jumpshot")
     layout_image, layout_frame_pos, layout_frame_neg = get_list("nba_layup")
-    file_name = "file_list.txt"
+    file_name = "file_list_train.txt"
     dunk_neg_full = dunk_frame_neg + jumpshot_frame_pos + layout_frame_pos
     random.seed(10)
 
     random.shuffle(dunk_neg_full)
-    time_num = 5
+    time_num = 100
     pos_index = range(len(dunk_frame_pos))
     pos_index = pos_index * time_num
     pos_index = random.sample(pos_index, time_num * len(dunk_image))
@@ -67,7 +67,7 @@ def gen_list():
     neg_index = random.sample(neg_index, time_num * len(dunk_image))
     np_neg_index = np.reshape(np.array(neg_index), (len(dunk_image), time_num))
     
-    with open("file_list.txt",  "w") as f:
+    with open(file_name,  "w") as f:
         for i in range(len(dunk_image)):
             for j in range(time_num):
                 f.write(dunk_image[i])

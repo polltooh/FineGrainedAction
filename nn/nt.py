@@ -33,12 +33,19 @@ def inference(data, nn_dim):
 
     with tf.variable_scope('fc_layer1') as scope:
         #weights = weight_variable([dim,32])
-        weights = variable_with_weight_decay([dim, nn_dim] , 0.1, 'weights', 0)
-        biases = bias_variable([nn_dim])
+        weights = variable_with_weight_decay([dim, 1000] , 0.1, 'weights', 0)
+        biases = bias_variable([1000])
         h_fc1 = tf.nn.bias_add(tf.matmul(reshape_data, weights), biases)
-        hl_relu = add_leaky_relu(h_fc1,leaky_param)
+        h1_relu = add_leaky_relu(h_fc1,leaky_param)
 
-    return hl_relu
+    with tf.variable_scope('fc_layer2') as scope:
+        #weights = weight_variable([dim,32])
+        weights = variable_with_weight_decay([1000, nn_dim] , 0.1, 'weights', 0)
+        biases = bias_variable([nn_dim])
+        h_fc2 = tf.nn.bias_add(tf.matmul(h1_relu, weights), biases)
+        h2_relu = add_leaky_relu(h_fc2,leaky_param)
+
+    return h2_relu
 
 def evaluation(infer, batch_size):
     feature_1, feature_2 = tf.split(0,2,infer)

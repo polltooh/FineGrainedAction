@@ -12,11 +12,11 @@ def read_file(file_name):
         data_list = file_data.split("\n")
         for i in range(len(data_list)):
             d_l = data_list[i].split(" ")
-            if (int(float(d_l[1])) < 10):
+            if (int(float(d_l[1])) < 1):
                 print(d_l[1])
                 image = cv2.imread(d_l[0])
                 cv2.imshow("res", image)
-                cv2.waitKey(50)
+                cv2.waitKey(1000)
 
 
 

@@ -40,13 +40,15 @@ void WriteToTxt(std::string file_name, std::vector<bool>& list);
 template<>
 void WriteToTxt(std::string file_name, std::vector<std::pair<std::string, bool>>& list);
 
-// template<typename T1, typename T2, typename T3>
-// void InsertToPair(std::vector<std::pair<T1, T2>>& name_list,
-//         std::vector<T3>& name);
+template<typename T1, typename T2, typename T3>
+void InsertToPair(std::vector<std::pair<T1, T2>>& name_list,
+        std::vector<T3>& name);
 
+template<>
 void InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
         std::vector<bool>& insert_list);
 
+template<>
 void InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
         std::vector<std::string>& insert_list);
 

@@ -40,12 +40,17 @@ def inference(data, nn_dim):
 
     return hl_relu
 
+def evaluation(infer, batch_size):
+    feature_1, feature_2 = tf.split(0,2,infer)
+    feature_diff = tf.reduce_sum(tf.square(feature_1 - feature_2), 1)
+    return feature_diff
+
 def triplet_loss(infer, labels, batch_size, radius = 1.0):
     feature_1, feature_2 = tf.split(0,2,infer)
 
     # label is either 0 or 1
     # partition_list = tf.equal(labels,1)
-    feature_diff = tf.reduce_mean(tf.square(feature_1 - feature_2), 1)
+    feature_diff = tf.reduce_sum(tf.square(feature_1 - feature_2), 1)
     feature_list = tf.dynamic_partition(feature_diff, labels, 2)
 
     # pos_loss = tf.reduce_mean(feature_list[1])

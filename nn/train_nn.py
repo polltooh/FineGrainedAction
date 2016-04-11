@@ -3,6 +3,7 @@ from bvlc_alexnet import AlexNet
 import nt
 import numpy as np
 import os
+import time
 import cv2
 import image_io
 
@@ -18,7 +19,7 @@ BATCH_SIZE = 50
 FEATURE_ROW = 227
 FEATURE_COL = 227
 LABEL_DIM = 27
-RADIUS = 1.0
+RADIUS = 10.0
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/logs',
@@ -100,7 +101,7 @@ def train():
             if i % 100 == 0:
                 print("i:%d, loss:%f"%(i,loss_v))
 
-            if i != 0 and i % 1000 == 0:
+            if i != 0 and i % 500 == 0:
                 curr_time = time.strftime("%Y%m%d_%H%M")
                 model_name = FLAGS.model_dir + '/' + curr_time + '_iter_' + str(i) + '_model.ckpt'
                 saver.save(sess,FLAGS.model_dir + '/' + curr_time + 'model.ckpt')

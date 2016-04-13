@@ -26,7 +26,6 @@ int main(int argc, char* argv[]){
     const std::string image_dir_name = dir_name + split_name[2] + "/";
     std::string file_list_name = image_dir_name + "file_list.txt";
     bool image_exist = utility::FileExist(file_list_name);
-
     if (!image_exist){
         std::ofstream output_file(file_list_name.c_str());
         cv::VideoCapture cap(video_name);
@@ -57,7 +56,6 @@ int main(int argc, char* argv[]){
         }
     }
     else{
-        std::string file_list_name = image_dir_name + "file_list.txt";
         std::ifstream input_file(file_list_name);
         std::string line;
         std::vector<std::string> name_list;

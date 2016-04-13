@@ -1,5 +1,5 @@
 import tensorflow as tf
-from bvlc_alexnet import AlexNet
+from bvlc_alexnet_fc7 import AlexNet
 import nt
 import numpy as np
 import os

@@ -3,7 +3,7 @@ import string
 import sys
 import os
 
-def download_single_video(label, video_url):
+def download_single_video(save_dir, video_url):
 
     yt = YouTube(video_url)
     try:
@@ -11,7 +11,7 @@ def download_single_video(label, video_url):
     except:
         video = min(yt.get_videos())
      
-    save_dir = "video/" + label + "/"
+    # save_dir = "video/" + label + "/"
     if not (os.path.isdir(save_dir)):
         os.mkdir(save_dir)
 
@@ -32,10 +32,10 @@ def download_single_video(label, video_url):
 
 if __name__ == "__main__":
     if (len(sys.argv) == 3):
-        label = sys.argv[1]
+        save_dir = sys.argv[1]
         url = sys.argv[2]
     else:
-        print("Usage download_video label url")
+        print("Usage download_video save_dir url")
         exit(1)
 
-    download_single_video(label, url)
+    download_single_video(save_dir, url)

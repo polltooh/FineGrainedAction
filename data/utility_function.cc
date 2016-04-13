@@ -59,6 +59,7 @@ void utility::WriteToTxt(std::string file_name,
     }
 }
 
+template<>
 void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
         std::vector<bool>& insert_list){
     // make sure the size are the same
@@ -68,6 +69,7 @@ void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
     }
 }
 
+template<>
 void utility::InsertToPair(std::vector<std::pair<std::string, bool>>& pair_list,
         std::vector<std::string>& insert_list){
     // make sure the size are the same

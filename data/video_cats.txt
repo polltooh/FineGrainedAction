@@ -1,0 +1,9 @@
+baseball_hit
+baseball_stolen_base
+baseball_throwing
+nba_dunk
+nba_jumpshot
+nba_layup
+tennis_backhand
+tennis_forehand
+tennis_serve

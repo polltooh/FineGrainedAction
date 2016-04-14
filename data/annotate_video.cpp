@@ -23,7 +23,12 @@ int main(int argc, char* argv[]){
 
     const std::string label_name = split_name[1];
     const std::string dir_name = "../" + split_name[0] + "/" + label_name + "/";
+    
     const std::string image_dir_name = dir_name + split_name[2] + "/";
+
+    std::string command = "mkdir -p " + image_dir_name;
+    system(command.c_str());
+
     std::string file_list_name = image_dir_name + "file_list.txt";
     bool image_exist = utility::FileExist(file_list_name);
     if (!image_exist){
@@ -34,8 +39,6 @@ int main(int argc, char* argv[]){
             return -1;
         }
 
-        std::string command = "mkdir -p " + image_dir_name;
-        system(command.c_str());
         int index = 0;
         while(1){
             cv::Mat frame;
@@ -49,7 +52,8 @@ int main(int argc, char* argv[]){
             std::string bfs(buffer);
 
             std::string f_name = image_dir_name + bfs;
-            std::cout<<f_name<<std::endl;
+            if (index % 1000 == 0)
+                std::cout<<f_name<<std::endl;
             cv::imwrite(f_name,frame);
             output_file << bfs <<'\n';
             index++;

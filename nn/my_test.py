@@ -28,7 +28,6 @@ def read_image(model, path):
     return img
 
 
-
 def test_imagenet():
     test_data = tf.placeholder(tf.float32, shape=(1, 227, 227, 3))
     net = AlexNet({'data':test_data})

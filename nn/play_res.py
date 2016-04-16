@@ -18,8 +18,8 @@ def read_file(file_name):
                 image = cv2.imread(d_l[0])
                 cv2.imwrite("temp/%08d.jpg"%(count), image)
                 count = count + 1
-                # cv2.imshow("res", image)
-                # cv2.waitKey(100)
+                cv2.imshow("res", image)
+                cv2.waitKey(100)
 
 
 if __name__ == "__main__":

@@ -43,9 +43,10 @@ def inference(data, nn_dim):
         weights = variable_with_weight_decay([1000, nn_dim] , 0.1, 'weights', 0)
         biases = bias_variable([nn_dim])
         h_fc2 = tf.nn.bias_add(tf.matmul(h1_relu, weights), biases)
-        h2_relu = add_leaky_relu(h_fc2,leaky_param)
+        # h2_relu = add_leaky_relu(h_fc2,leaky_param)
 
-    return h2_relu
+    return h_fc2
+
 
 def evaluation(infer, batch_size):
     feature_1, feature_2 = tf.split(0,2,infer)

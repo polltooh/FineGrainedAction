@@ -31,6 +31,11 @@ tf.app.flags.DEFINE_string('model_dir', '/home/mscvadmin/action/FineGrainedActio
 
 
 
+def define_graph_config():
+    config_proto =  tf.ConfigProto()
+    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.5
+    return config_proto
+
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):
     
     key, next_line = line_reader.read(filename_queue)
@@ -75,12 +80,20 @@ def train():
 
     tloss = nt.triplet_loss(infer, label_ph, BATCH_SIZE, RADIUS)
 
+    tf.scalar_summary('loss', tloss)
+
+    for var in tf.trainable_variables():
+        tf.histogram_summary(var.op.name, var)
+    merged_sum =tf.merge_all_summaries()
+
     lr = FLAGS.init_learning_rate
     train_op = nt.training(tloss, lr, global_step) 
 
     saver = tf.train.Saver()
 
-    sess = tf.Session()
+    config_proto = define_graph_config()
+    sess = tf.Session(config = config_proto)
+
     if TRAIN:
         writer_sum = tf.train.SummaryWriter(FLAGS.train_log_dir,graph_def = sess.graph_def)
 
@@ -96,9 +109,10 @@ def train():
                 train_batch_image, train_batch_label])
 
             feed_data = {image_data_ph: batch_image_v, label_ph: batch_label_v}
-            loss_v,_ = sess.run([tloss, train_op], feed_dict = feed_data) 
+            loss_v,_,merged_sum_v = sess.run([tloss, train_op, merged_sum], feed_dict = feed_data) 
             if i % 100 == 0:
                 print("i:%d, loss:%f"%(i,loss_v))
+            writer_sum.add_summary(merged_sum_v, i)
 
             if i != 0 and i % 500 == 0:
                 curr_time = time.strftime("%Y%m%d_%H%M")

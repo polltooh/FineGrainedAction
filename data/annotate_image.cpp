@@ -96,19 +96,13 @@ int main(int argc, char* argv[]){
         index = std::min((int)label_list.size() - 1, index);
         label = label_list[index];
         cv::Mat image = cv::imread(image_list[index]);
-        //cv::Mat resized_image;
+        cv::Mat resized_image;
+        cv::resize(image, resized_image, cv::Size(image.rows * 2, image.cols * 2));
 
-        //if (!image.data){
-        //   resized_image = cv::Mat::zeros(256, 256, CV_32F);
-        //}
-        //else{
-        //    cv::resize(image, resized_image, cv::Size(400,400));
-        //}
+        utility::AddText(resized_image, label_name, label_list[index]);
+        utility::AddFrameText(resized_image, index, int(label_list.size() - 1));
 
-        utility::AddText(image, label_name, label_list[index]);
-        utility::AddFrameText(image, index);
-
-        cv::imshow("test", image);
+        cv::imshow("test", resized_image);
         int key = cv::waitKey(0);
         utility::KeyBehavior(key, label, index, update_label, stop);
 

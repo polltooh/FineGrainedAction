@@ -16,10 +16,15 @@ void utility::AddText(cv::Mat& image, std::string label_name, bool label){
     cv::putText(image, text , position, cv::FONT_HERSHEY_SIMPLEX, 1, color, 2);
 }
 
-void utility::AddFrameText(cv::Mat& image, int index){
+void utility::AddFrameText(cv::Mat& image, int index, int total_num){
+    
     std::string text = std::to_string(index);
-    const int col_offset = 100;
-    const int row_offset = 20;
+    if (total_num != -1){
+        text += "/" + std::to_string(total_num);
+    }
+
+    const int col_offset = 200;
+    const int row_offset = 50;
     cv::Point position((image.cols - col_offset)/2,row_offset);
     cv::Scalar color(255, 255, 0); 
     cv::putText(image, text , position, cv::FONT_HERSHEY_SIMPLEX, 1, 

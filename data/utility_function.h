@@ -28,7 +28,7 @@ namespace utility{
 // for gui
 void UpdateLabel(std::vector<bool>& label_list, bool label, int index);
 void AddText(cv::Mat& image, std::string label_name, bool label);
-void AddFrameText(cv::Mat& image, int index);
+void AddFrameText(cv::Mat& image, int index, int total_num = -1);
 
 // for saing the label
 template<typename T>

@@ -24,7 +24,7 @@ RADIUS = 1.0
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/logs',
         '''directory wherer to write event logs''')
-tf.app.flags.DEFINE_integer('max_training_iter', int(17039/50) + 1,
+tf.app.flags.DEFINE_integer('max_training_iter', 1000,
         '''the max number of training iteration''')
 tf.app.flags.DEFINE_float('init_learning_rate',0.001,
         '''initial learning rate''')
@@ -37,6 +37,15 @@ def write_to_file(name_list, value):
             f.write(" ")
             f.write(str(value[i]))
             f.write("\n")
+
+def calculate_iter():
+    with open(TEST_TXT, 'r') as f:
+        s = f.read()
+        s_l = s.split('\n')
+        total_num = len(s_l)
+        
+        FLAGS.max_training_iter = int(total_num / BATCH_SIZE) + 1
+        print(FLAGS.max_training_iter)
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):
     
@@ -69,6 +78,8 @@ def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE
 
 
 def train():
+    calculate_iter()
+
     train_filenamequeue=tf.train.string_input_producer([TEST_TXT], shuffle=SHUFFLE_DATA)
 
     line_reader = tf.TextLineReader()

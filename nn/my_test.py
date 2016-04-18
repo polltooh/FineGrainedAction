@@ -3,6 +3,20 @@ import cv2
 import numpy as np
 from bvlc_alexnet import AlexNet
 
+
+MAX_ITER = 1000
+
+def change_iter():
+    global MAX_ITER
+    MAX_ITER = 100
+
+def read_txt():
+    with open('file_list_test.txt', 'r') as f:
+        s = f.read()
+        s_l = s.split('\n')
+        print(len(s_l))
+
+
 def read_image(model, path):
     img = cv2.imread(path)
     h, w, c = np.shape(img)
@@ -47,8 +61,10 @@ def test_tensor():
 
 
 def main():
-    test_tensor()
+    # test_tensor()
     # test_imagenet()
+    # change_iter()
+    read_txt()
 
 if __name__ == "__main__":
     main()

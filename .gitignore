@@ -1,7 +1,9 @@
 data/bing_key.txt
 data/build/
 *.mp4
+*.jpg
 # data/image/
 # data/video/
 nn/kaffe/
+
 old

@@ -33,7 +33,7 @@ tf.app.flags.DEFINE_string('model_dir', '/home/mscvadmin/action/FineGrainedActio
 
 def define_graph_config():
     config_proto =  tf.ConfigProto()
-    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.5
+    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.9
     return config_proto
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):
@@ -112,7 +112,8 @@ def train():
             loss_v,_,merged_sum_v = sess.run([tloss, train_op, merged_sum], feed_dict = feed_data) 
             if i % 100 == 0:
                 print("i:%d, loss:%f"%(i,loss_v))
-            writer_sum.add_summary(merged_sum_v, i)
+                if i != 0:
+                    writer_sum.add_summary(merged_sum_v, i)
 
             if i != 0 and i % 500 == 0:
                 curr_time = time.strftime("%Y%m%d_%H%M")

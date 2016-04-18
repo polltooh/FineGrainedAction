@@ -29,7 +29,6 @@ def inference(data, nn_dim):
     for d in data.get_shape().as_list()[1:]:
         dim *= d
     reshape_data = tf.reshape(data, [-1, dim])
-    # data is from pool5
 
     with tf.variable_scope('fc_layer1') as scope:
         #weights = weight_variable([dim,32])
@@ -43,9 +42,10 @@ def inference(data, nn_dim):
         weights = variable_with_weight_decay([1000, nn_dim] , 0.1, 'weights', 0)
         biases = bias_variable([nn_dim])
         h_fc2 = tf.nn.bias_add(tf.matmul(h1_relu, weights), biases)
-        # h2_relu = add_leaky_relu(h_fc2,leaky_param)
+        h2_relu = add_leaky_relu(h_fc2, leaky_param)
 
-    return h_fc2
+    return h2_relu
+    # return h_fc2
 
 
 def evaluation(infer, batch_size):

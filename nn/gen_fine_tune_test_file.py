@@ -1,0 +1,53 @@
+import os
+import cv2
+import random
+import numpy as np
+
+image_dir = "/home/mscvadmin/action/FineGrainedAction/data/test_image/"
+frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/test_video/"
+
+def delete_last_empty_line(s):
+    while(len(s) >= 1 and s[-1] == '\n'):
+        s = s[:-1]
+    return s
+
+# assume there is only one image
+def get_image(label_name):
+    list_name = os.listdir(image_dir + label_name)
+    list_name = [image_dir + label_name + "/" + f for f in list_name]
+    return list_name[0]
+
+def get_frame(label_name):
+    list_name = os.listdir(frame_dir + label_name)
+    frame_list = list()
+    for name in list_name:
+       curr_path = frame_dir + label_name + "/" + name + "/"
+       if (os.path.isdir(curr_path)):
+           file_list_name = curr_path + "/file_list.txt"
+           with open (file_list_name, "r") as f:
+               file_data = (f.read())
+               file_data = delete_last_empty_line(file_data)
+               data_list = file_data.split("\n")
+               for d in data_list:
+                   frame_list.append(curr_path + d)
+
+    return frame_list
+
+def get_list(label_name):
+    image = get_image(label_name)
+    frame_list = get_frame(label_name)
+    return image, frame_list
+
+def gen_list():
+    dunk_image, test_frame = get_list("nba_dunk")
+    
+    with open("file_list_fine_tune_test.txt",  "w") as f:
+        for i in range(len(test_frame)):
+            f.write(test_frame[i])
+            f.write(" ")
+            f.write("-1")
+            f.write("\n")
+
+if __name__ == "__main__":
+    gen_list()
+

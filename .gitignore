@@ -1,9 +1,14 @@
 data/bing_key.txt
 data/build/
+nn/model_logs
+nn/logs
+nn/fine_tune_nn_logs
+nn/fine_tune_nn_model_logs
+nn/temp
+*.npy
 *.mp4
 *.jpg
 # data/image/
 # data/video/
 nn/kaffe/
-
 old

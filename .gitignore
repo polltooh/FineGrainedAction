@@ -8,7 +8,7 @@ nn/temp
 *.npy
 *.mp4
 *.jpg
-
+*.pyc
 data/image/
 data/video/
 

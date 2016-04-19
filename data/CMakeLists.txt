@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 
-project( AnnotVideo )
 find_package( OpenCV REQUIRED )
 find_package( Boost COMPONENTS system filesystem REQUIRED)
 

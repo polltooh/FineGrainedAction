@@ -9,6 +9,6 @@ nn/temp
 *.mp4
 *.jpg
 *.pyc
-
+*.txt
 nn/kaffe/
 old

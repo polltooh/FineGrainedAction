@@ -68,30 +68,9 @@ def write_to_file(full_image_list, label_list, file_name):
             f.write(str(label_list[index[i]]))
             f.write("\n")
 
-# def gen_list_nba():
-#     dunk_image, dunk_frame_pos, dunk_frame_neg = get_list("nba_dunk")
-#     jumpshot_image, jumpshot_frame_pos, jumpshot_frame_neg = get_list("nba_jumpshot")
-#     layup_image, layup_frame_pos, layup_frame_neg = get_list("nba_layup")
-#     
-#     neg_image = dunk_frame_neg + jumpshot_frame_neg + layup_frame_neg
-#     pos_image = dunk_image + dunk_frame_pos + jumpshot_image + jumpshot_frame_pos + layup_image + layup_frame_pos
-# 
-# 
-#     random.shuffle(neg_image)
-# 
-#     full_image_list = neg_image[:len(pos_image)] + pos_image
-# 
-#     label_list = [0] * len(pos_image) + [1] * (len(dunk_image) + len(dunk_frame_pos)) + [2] * (len(jumpshot_image) + len(jumpshot_frame_pos)) + [3] * (len(layup_image) + len(layup_frame_pos))
-# 
-# 
-#     file_name = "file_list_fine_tune_train_nba.txt"
-#     write_to_file(full_image_list, label_list, file_name) 
 
 def gen_list(file_name_list, pos_start_count):
     file_num = len(file_name_list)
-    # image_d = dict()
-    # frame_pos_d = dict()
-    # frame_neg_d = dict()
     name_list = list()
     label_list = list()
 

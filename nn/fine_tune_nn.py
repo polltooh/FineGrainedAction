@@ -9,7 +9,7 @@ import image_io
 
 # the dimension of the final layer = feature dim
 NN_DIM = 100
-LABEL_DIM = 4
+LABEL_DIM = 10
 
 TRAIN_TXT = 'file_list_fine_tune_train.txt'
 # TEST_TXT = 'file_list_test.txt'
@@ -21,17 +21,17 @@ FEATURE_ROW = 227
 FEATURE_COL = 227
 
 FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/fine_tune_nn_logs',
+tf.app.flags.DEFINE_string('train_log_dir','fine_tune_nn_logs',
         '''directory wherer to write event logs''')
 tf.app.flags.DEFINE_integer('max_training_iter', 10000,
         '''the max number of training iteration''')
 tf.app.flags.DEFINE_float('init_learning_rate',0.001,
         '''initial learning rate''')
-tf.app.flags.DEFINE_string('model_dir', '/home/mscvadmin/action/FineGrainedAction/nn/fine_tune_nn_model_logs','''directory where to save the model''')
+tf.app.flags.DEFINE_string('model_dir', 'fine_tune_nn_model_logs','''directory where to save the model''')
 
 def define_graph_config():
     config_proto =  tf.ConfigProto()
-    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.5
+    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.9
     return config_proto
 
 def dense_to_one_hot_numpy(labels_dense, num_classes=LABEL_DIM):
@@ -136,6 +136,10 @@ def train():
 
 
 def main(argv = None):
+    if not os.path.exists(FLAGS.model_dir):
+        os.makedirs(FLAGS.model_dir)
+    if not os.path.exists(FLAGS.train_log_dir):
+        os.makedirs(FLAGS.train_log_dir)
     train()
 
 if __name__ == '__main__':

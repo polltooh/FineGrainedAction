@@ -122,6 +122,10 @@ def train():
 
 
 def main(argv = None):
+    if not os.path.exists(FLAGS.model_dir):
+        os.makedirs(FLAGS.model_dir)
+    if not os.path.exists(FLAGS.train_log_dir):
+        os.makedirs(FLAGS.train_log_dir)
     train()
 
 if __name__ == '__main__':

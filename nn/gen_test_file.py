@@ -39,16 +39,33 @@ def get_list(label_name):
     return image, frame_list
 
 def gen_list():
-    dunk_image, test_frame = get_list("nba_dunk")
-    
-    with open("file_list_test.txt",  "w") as f:
+    label_name = "nba_layup"
+    _, test_frame = get_list("nba_dunk")
+    query_image = get_image(label_name)
+    # jumpshot_image = get_image("nba_jumpshot")
+    # layup_image = get_image("nba_layup")
+    with open("file_list_test_" + label_name + ".txt",  "w") as f:
         for i in range(len(test_frame)):
-            f.write(dunk_image)
+            f.write(query_image)
             f.write(" ")
             f.write(test_frame[i])
             f.write(" ")
             f.write("-1")
             f.write("\n")
+
+            # f.write(jumpshot_image)
+            # f.write(" ")
+            # f.write(test_frame[i])
+            # f.write(" ")
+            # f.write("-1")
+            # f.write("\n")
+
+            # f.write(layup_image)
+            # f.write(" ")
+            # f.write(test_frame[i])
+            # f.write(" ")
+            # f.write("-1")
+            # f.write("\n")
 
 if __name__ == "__main__":
     gen_list()

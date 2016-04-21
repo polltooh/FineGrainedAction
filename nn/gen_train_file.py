@@ -71,7 +71,7 @@ def gen_list(file_name_list):
     random.seed(10)
 
     random.shuffle(neg_full)
-    time_num = 10
+    time_num = 50
     pos_index = range(len(frame_pos_d[0]))
     pos_index = pos_index * time_num
     pos_index = random.sample(pos_index, time_num * len(image_d[0]))
@@ -91,6 +91,9 @@ def gen_list(file_name_list):
             curr_s = image_d[0][i] + " " + neg_full[np_neg_index[i][j]] + \
                 " " + "0" + "\n"
             file_list.append(curr_s)
+    if(len(file_list) == 0):
+        print(file_name_list)
+        print(" is wrong")
     return file_list
 
 

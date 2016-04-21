@@ -6,13 +6,14 @@ import os
 import time
 import cv2
 import image_io
+import sys
 import math
 # the dimension of the final layer = feature dim
 NN_DIM = 100
 
 TEST_TXT = 'file_list_test.txt'
 # TEST_TXT = 'file_list_train.txt'
-
+RES_TXT = 'test_res.txt'
 TRAIN = False
 SHUFFLE_DATA = False
 BATCH_SIZE = 50
@@ -24,6 +25,8 @@ RADIUS = 1.0
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/logs',
         '''directory wherer to write event logs''')
+
+# will be changed in the program
 tf.app.flags.DEFINE_integer('max_training_iter', 1000,
         '''the max number of training iteration''')
 tf.app.flags.DEFINE_float('init_learning_rate',0.001,
@@ -31,7 +34,7 @@ tf.app.flags.DEFINE_float('init_learning_rate',0.001,
 tf.app.flags.DEFINE_string('model_dir', '/home/mscvadmin/action/FineGrainedAction/nn/model_logs','''directory where to save the model''')
 
 def write_to_file(name_list, value):
-    with open("test_res.txt", "w") as f:
+    with open(RES_TXT, "w") as f:
         for i in range(len(name_list)):
             f.write(name_list[i])
             f.write(" ")
@@ -135,4 +138,11 @@ def main(argv = None):
     train()
 
 if __name__ == '__main__':
+    if (len(sys.argv) >= 2):
+        global TEST_TXT
+        TEST_TXT = sys.argv[1]
+        if (len(sys.argv) > 2):
+            global RES_TXT
+            RES_TXT = sys.argv[2]
+
     tf.app.run()

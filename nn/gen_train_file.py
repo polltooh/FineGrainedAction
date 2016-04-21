@@ -3,8 +3,11 @@ import cv2
 import random
 import numpy as np
 
-image_dir = "/home/mscvadmin/action/FineGrainedAction/data/image/"
-frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/video/"
+# image_dir = "/home/mscvadmin/action/FineGrainedAction/data/image/"
+# frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/video/"
+
+image_dir = "../data/image/"
+frame_dir = "../data/video/"
 
 def delete_last_empty_line(s):
     while(len(s) >= 1 and s[-1] == '\n'):
@@ -13,7 +16,7 @@ def delete_last_empty_line(s):
 
 def get_image(label_name):
     list_name = os.listdir(image_dir + label_name)
-    list_name = [f for f in list_name if f[0:2] != '._']
+    list_name = [f for f in list_name if f[0:2] != '._' and f.endswith('.jpg')]
     list_name = [image_dir + label_name + "/" + f for f in list_name]
     return list_name
 
@@ -148,6 +151,14 @@ if __name__ == "__main__":
     curr_list += gen_list_2(['nba_dunk', 'nba_jumpshot', 'nba_layup'])
     curr_list += gen_list_2(['nba_jumpshot', 'nba_dunk', 'nba_layup'])
     curr_list += gen_list_2(['nba_layup', 'nba_jumpshot', 'nba_dunk'])
+
+    curr_list += gen_list_2(['tennis_forehand', 'tennis_backhand', 'tennis_serve'])
+    curr_list += gen_list_2(['tennis_backhand', 'tennis_forehand', 'tennis_serve'])
+    curr_list += gen_list_2(['tennis_serve', 'tennis_forehand', 'tennis_backhand'])
+
+    curr_list += gen_list_2(['baseball_hit', 'baseball_pitch', 'baseball_stolen_base'])
+    curr_list += gen_list_2(['baseball_pitch', 'baseball_hit', 'baseball_stolen_base'])
+    curr_list += gen_list_2(['baseball_stolen_base', 'baseball_pitch', 'baseball_hit'])
 
     with open("file_list_train.txt", "w") as f:
         for c in curr_list:

@@ -3,8 +3,13 @@ import cv2
 import random
 import numpy as np
 
-image_dir = "/home/mscvadmin/action/FineGrainedAction/data/image/"
-frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/video/"
+# image_dir = "/home/mscvadmin/action/FineGrainedAction/data/image/"
+# frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/video/"
+
+image_dir = "../data/image/"
+frame_dir = "../data/video/"
+
+random.seed(10)
 
 def delete_last_empty_line(s):
     while(len(s) >= 1 and s[-1] == '\n'):
@@ -42,31 +47,20 @@ def get_frame(label_name):
                    neg_list.append(curr_path + data_list[index])
     return pos_list, neg_list
 
-def get_list(label_name):
+def get_list(label_name, suffle_cut_neg = False):
     image = get_image(label_name)
     frame_pos, frame_neg = get_frame(label_name)
+
+    if suffle_cut_neg:
+        random.shuffle(frame_neg)
+        frame_neg = frame_neg[0:min(len(frame_neg), len(image) + len(frame_pos))]
+
     return image, frame_pos, frame_neg 
 
-def gen_list():
-    dunk_image, dunk_frame_pos, dunk_frame_neg = get_list("nba_dunk")
-    jumpshot_image, jumpshot_frame_pos, jumpshot_frame_neg = get_list("nba_jumpshot")
-    layup_image, layup_frame_pos, layup_frame_neg = get_list("nba_layup")
-    
-    neg_image = dunk_frame_neg + jumpshot_frame_neg + layup_frame_neg
-    pos_image = dunk_image + dunk_frame_pos + jumpshot_image + jumpshot_frame_pos + layup_image + layup_frame_pos
-
-    random.seed(10)
-    random.shuffle(neg_image)
-
-    full_image_list = neg_image[:len(pos_image)] + pos_image
-
-    label_list = [0] * len(pos_image) + [1] * (len(dunk_image) + len(dunk_frame_pos)) + [2] * (len(jumpshot_image) + len(jumpshot_frame_pos)) + [3] * (len(layup_image) + len(layup_frame_pos))
-
+def write_to_file(full_image_list, label_list, file_name):
     index = range(len(full_image_list))
     random.shuffle(index)
 
-    file_name = "file_list_fine_tune_train.txt"
-    
     with open(file_name,  "w") as f:
         for i in range(len(full_image_list)):
             f.write(full_image_list[index[i]])
@@ -74,6 +68,61 @@ def gen_list():
             f.write(str(label_list[index[i]]))
             f.write("\n")
 
-if __name__ == "__main__":
-    gen_list()
+# def gen_list_nba():
+#     dunk_image, dunk_frame_pos, dunk_frame_neg = get_list("nba_dunk")
+#     jumpshot_image, jumpshot_frame_pos, jumpshot_frame_neg = get_list("nba_jumpshot")
+#     layup_image, layup_frame_pos, layup_frame_neg = get_list("nba_layup")
+#     
+#     neg_image = dunk_frame_neg + jumpshot_frame_neg + layup_frame_neg
+#     pos_image = dunk_image + dunk_frame_pos + jumpshot_image + jumpshot_frame_pos + layup_image + layup_frame_pos
+# 
+# 
+#     random.shuffle(neg_image)
+# 
+#     full_image_list = neg_image[:len(pos_image)] + pos_image
+# 
+#     label_list = [0] * len(pos_image) + [1] * (len(dunk_image) + len(dunk_frame_pos)) + [2] * (len(jumpshot_image) + len(jumpshot_frame_pos)) + [3] * (len(layup_image) + len(layup_frame_pos))
+# 
+# 
+#     file_name = "file_list_fine_tune_train_nba.txt"
+#     write_to_file(full_image_list, label_list, file_name) 
 
+def gen_list(file_name_list, pos_start_count):
+    file_num = len(file_name_list)
+    # image_d = dict()
+    # frame_pos_d = dict()
+    # frame_neg_d = dict()
+    name_list = list()
+    label_list = list()
+
+    for i in range(file_num):
+        image_l, frame_pos_l, frame_neg_l = get_list(file_name_list[i], True)
+        name_list += image_l + frame_pos_l + frame_neg_l
+        label_list += [pos_start_count + i] * (len(image_l) + \
+                len(frame_pos_l)) + [0] * len(frame_neg_l)
+
+    return name_list, label_list 
+
+if __name__ == "__main__":
+    
+    name_list = list()
+    label_list = list()
+
+    name_list_t, label_list_t = gen_list(['nba_dunk', 'nba_jumpshot', \
+                'nba_layup'], 1)
+    name_list += name_list_t
+    label_list += label_list_t
+
+    name_list_t, label_list_t = gen_list(['tennis_forehand', 'tennis_backhand', \
+                'tennis_serve'], 4)
+    name_list += name_list_t
+    label_list += label_list_t
+
+    name_list_t, label_list_t = gen_list(['baseball_hit', 'baseball_pitch', \
+                'baseball_stolen_base'], 7)
+    name_list += name_list_t
+    label_list += label_list_t
+
+    file_name = "file_list_fine_tune_train.txt"
+
+    write_to_file(name_list, label_list, file_name)

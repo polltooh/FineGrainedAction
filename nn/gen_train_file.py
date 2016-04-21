@@ -50,7 +50,7 @@ def get_list(label_name):
     frame_pos, frame_neg = get_frame(label_name)
     return image, frame_pos, frame_neg 
 
-def gen_list_2(file_name_list):
+def gen_list(file_name_list):
     # file name 1: the positive image label
     # file name 2 & 3..: the negative image label
     file_num = len(file_name_list)
@@ -60,11 +60,12 @@ def gen_list_2(file_name_list):
     for i in range(file_num):
         image_d[i], frame_pos_d[i], frame_neg_d[i] = get_list(file_name_list[i])
 
-
+    # the first neg frame
     neg_full = frame_neg_d[0]
     for i in range(file_num):
         if i == 0:
             continue
+        # add another action frame to the negative 
         neg_full += frame_pos_d[i]
 
     random.seed(10)
@@ -90,75 +91,22 @@ def gen_list_2(file_name_list):
             curr_s = image_d[0][i] + " " + neg_full[np_neg_index[i][j]] + \
                 " " + "0" + "\n"
             file_list.append(curr_s)
-            # file_list.append(" ")
-            # f.write(image_d[0][i])
-            # f.write(" ")
-            # f.write(frame_pos_d[0][np_pos_index[i][j]])
-            # f.write(" ")
-            # f.write("1")
-            # f.write("\n")
-
-            # f.write(image_d[0][i])
-            # f.write(" ")
-            # f.write(neg_full[np_neg_index[i][j]])
-            # f.write(" ")
-            # f.write("0")
-            # f.write("\n")
     return file_list
-
-def gen_list():
-    dunk_image, dunk_frame_pos, dunk_frame_neg = get_list("nba_dunk")
-    jumpshot_image, jumpshot_frame_pos, jumpshot_frame_neg = get_list("nba_jumpshot")
-    layup_image, layup_frame_pos, layup_frame_neg = get_list("nba_layup")
-    file_name = "file_list_train.txt"
-    dunk_neg_full = dunk_frame_neg + jumpshot_frame_pos + layup_frame_pos
-    random.seed(10)
-
-    random.shuffle(dunk_neg_full)
-    time_num = 100
-    pos_index = range(len(dunk_frame_pos))
-    pos_index = pos_index * time_num
-    pos_index = random.sample(pos_index, time_num * len(dunk_image))
-    np_pos_index = np.reshape(np.array(pos_index), (len(dunk_image), time_num))
-
-    
-    neg_index = range(len(dunk_neg_full))
-    neg_index = neg_index * time_num
-    neg_index = random.sample(neg_index, time_num * len(dunk_image))
-    np_neg_index = np.reshape(np.array(neg_index), (len(dunk_image), time_num))
-    
-    with open(file_name,  "w") as f:
-        for i in range(len(dunk_image)):
-            for j in range(time_num):
-                f.write(dunk_image[i])
-                f.write(" ")
-                f.write(dunk_frame_pos[np_pos_index[i][j]])
-                f.write(" ")
-                f.write("1")
-                f.write("\n")
-
-                f.write(dunk_image[i])
-                f.write(" ")
-                f.write(dunk_neg_full[np_neg_index[i][j]])
-                f.write(" ")
-                f.write("0")
-                f.write("\n")
-
 
 
 if __name__ == "__main__":
     curr_list = list()
-    curr_list += gen_list_2(['nba_dunk', 'nba_jumpshot', 'nba_layup'])
-    curr_list += gen_list_2(['nba_jumpshot', 'nba_dunk', 'nba_layup'])
-    curr_list += gen_list_2(['nba_layup', 'nba_jumpshot', 'nba_dunk'])
+    curr_list += gen_list(['nba_dunk', 'nba_jumpshot', 'nba_layup'])
+    curr_list += gen_list(['nba_jumpshot', 'nba_dunk', 'nba_layup'])
+    curr_list += gen_list(['nba_layup', 'nba_jumpshot', 'nba_dunk'])
 
-    curr_list += gen_list_2(['tennis_forehand', 'tennis_backhand', 'tennis_serve'])
-    curr_list += gen_list_2(['tennis_backhand', 'tennis_forehand', 'tennis_serve'])
-    curr_list += gen_list_2(['tennis_serve', 'tennis_forehand', 'tennis_backhand'])
+    curr_list += gen_list(['tennis_forehand', 'tennis_backhand', 'tennis_serve'])
+    curr_list += gen_list(['tennis_backhand', 'tennis_forehand', 'tennis_serve'])
+    curr_list += gen_list(['tennis_serve', 'tennis_forehand', 'tennis_backhand'])
 
-    curr_list += gen_list_2(['baseball_hit', 'baseball_pitch', 'baseball_stolen_base'])
-    curr_list += gen_list_2(['baseball_pitch', 'baseball_hit', 'baseball_stolen_base'])
-    curr_list += gen_list_2(['baseball_stolen_base', 'baseball_pitch', 'baseball_hit'])
+    curr_list += gen_list(['baseball_hit', 'baseball_pitch', 'baseball_stolen_base'])
+    curr_list += gen_list(['baseball_pitch', 'baseball_hit', 'baseball_stolen_base'])
+    curr_list += gen_list(['baseball_stolen_base', 'baseball_pitch', 'baseball_hit'])
 
     with open("file_list_train.txt", "w") as f:
         for c in curr_list:

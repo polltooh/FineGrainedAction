@@ -23,15 +23,13 @@ LABEL_DIM = 27
 RADIUS = 1.0
 
 FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/logs',
+tf.app.flags.DEFINE_string('train_log_dir','logs',
         '''directory wherer to write event logs''')
 
 # will be changed in the program
-tf.app.flags.DEFINE_integer('max_training_iter', 1000,
-        '''the max number of training iteration''')
-tf.app.flags.DEFINE_float('init_learning_rate',0.001,
-        '''initial learning rate''')
-tf.app.flags.DEFINE_string('model_dir', '/home/mscvadmin/action/FineGrainedAction/nn/model_logs','''directory where to save the model''')
+tf.app.flags.DEFINE_integer('max_training_iter', 1000,'''the max number of training iteration''')
+tf.app.flags.DEFINE_float('init_learning_rate',0.001,'''initial learning rate''')
+tf.app.flags.DEFINE_string('model_dir', 'model_logs','''directory where to save the model''')
 
 def write_to_file(name_list, value):
     with open(RES_TXT, "w") as f:
@@ -94,7 +92,7 @@ def train():
 
     net = AlexNet({'data':image_data_ph})
 
-    infer = nt.inference(net.get_output(), NN_DIM)
+    infer = nt.inference2(net.get_output(), NN_DIM)
 
     eva = nt.evaluation(infer, BATCH_SIZE)
 
@@ -110,10 +108,12 @@ def train():
 
     ckpt = tf.train.get_checkpoint_state(FLAGS.model_dir)
     print(ckpt.all_model_checkpoint_paths[-1])
-    if ckpt and ckpt.all_model_checkpoint_paths[-1]:
-        saver.restore(sess, ckpt.all_model_checkpoint_paths[-1])
-    else:
-        print('no check point, start from begining')
+    saver.restore(sess, "model_logs/20160417_2125model.ckpt")
+
+    # if ckpt and ckpt.all_model_checkpoint_paths[-1]:
+    #     saver.restore(sess, ckpt.all_model_checkpoint_paths[-1])
+    # else:
+    #     print('no check point, start from begining')
 
     name_list = list()
     dist_list = list()

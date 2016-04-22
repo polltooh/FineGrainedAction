@@ -9,7 +9,7 @@ import image_io
 
 # the dimension of the final layer = feature dim
 NN_DIM = 100
-LABEL_DIM = 4
+LABEL_DIM = 10
 
 TEST_TXT = 'file_list_fine_tune_test.txt'
 # TEST_TXT = 'file_list_test.txt'
@@ -122,7 +122,7 @@ def train():
     ckpt = tf.train.get_checkpoint_state(FLAGS.model_dir)
     print(ckpt.all_model_checkpoint_paths[-1])
     if ckpt and ckpt.all_model_checkpoint_paths[-1]:
-        saver.restore(sess, ckpt.all_model_checkpoint_paths[-1])
+        saver.restore(sess, FLAGS.model_dir + "/" + ckpt.all_model_checkpoint_paths[-1])
     else:
         print('no check point, start from begining')
 

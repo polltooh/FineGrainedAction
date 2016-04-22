@@ -67,6 +67,8 @@ int main(int argc, char* argv[]){
             name_list.push_back(line);
         }
         std::vector<bool> label_list(name_list.size(), false);
+        // std::cout<<label_list.size()<<std::endl;
+        // exit(1);
         std::string label_list_name = image_dir_name + "label.txt";
         std::string label_list_cp_name = image_dir_name + "label_cp.txt";
 

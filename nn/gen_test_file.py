@@ -39,9 +39,9 @@ def get_list(label_name):
     return image, frame_list
 
 def gen_list():
-    label_name = "nba_layup"
-    _, test_frame = get_list("nba_dunk")
-    query_image = get_image(label_name)
+    label_name = "nba_dunk"
+    query_image, test_frame = get_list("nba_dunk")
+    # query_image = get_image(label_name)
     # jumpshot_image = get_image("nba_jumpshot")
     # layup_image = get_image("nba_layup")
     with open("file_list_test_" + label_name + ".txt",  "w") as f:

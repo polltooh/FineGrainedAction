@@ -12,6 +12,9 @@ def read_file(file_name):
         file_data = f.read()
         file_data = delete_last_empty_line(file_data)
         data_list = file_data.split("\n")
+        if (len(data_list) == 0):
+            print("empty file " + file_name)
+            return
         count = 0
         for i in range(len(data_list)):
             d_l = data_list[i].split(" ")
@@ -26,7 +29,7 @@ def read_file(file_name):
 if __name__ == "__main__":
     if (len(sys.argv) < 2):
         print("Usage: play_res.py res_file_name.txt")
-        file_name = 'test_res.txt'
+        file_name = 'test_res_nba_dunk.txt'
     else:
         file_name = sys.argv[1]
 

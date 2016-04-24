@@ -108,12 +108,12 @@ def train():
 
     ckpt = tf.train.get_checkpoint_state(FLAGS.model_dir)
     print(ckpt.all_model_checkpoint_paths[-1])
-    saver.restore(sess, "model_logs/20160417_2125model.ckpt")
+    # saver.restore(sess, "model_logs/20160417_2125model.ckpt")
 
-    # if ckpt and ckpt.all_model_checkpoint_paths[-1]:
-    #     saver.restore(sess, ckpt.all_model_checkpoint_paths[-1])
-    # else:
-    #     print('no check point, start from begining')
+    if ckpt and ckpt.all_model_checkpoint_paths[-1]:
+        saver.restore(sess, ckpt.all_model_checkpoint_paths[-1])
+    else:
+        print('no check point, start from begining')
 
     name_list = list()
     dist_list = list()

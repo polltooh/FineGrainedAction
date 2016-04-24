@@ -103,13 +103,13 @@ if __name__ == "__main__":
     curr_list += gen_list(['nba_jumpshot', 'nba_dunk', 'nba_layup'])
     curr_list += gen_list(['nba_layup', 'nba_jumpshot', 'nba_dunk'])
 
-    curr_list += gen_list(['tennis_forehand', 'tennis_backhand', 'tennis_serve'])
-    curr_list += gen_list(['tennis_backhand', 'tennis_forehand', 'tennis_serve'])
-    curr_list += gen_list(['tennis_serve', 'tennis_forehand', 'tennis_backhand'])
+    # curr_list += gen_list(['tennis_forehand', 'tennis_backhand', 'tennis_serve'])
+    # curr_list += gen_list(['tennis_backhand', 'tennis_forehand', 'tennis_serve'])
+    # curr_list += gen_list(['tennis_serve', 'tennis_forehand', 'tennis_backhand'])
 
-    curr_list += gen_list(['baseball_hit', 'baseball_pitch', 'baseball_stolen_base'])
-    curr_list += gen_list(['baseball_pitch', 'baseball_hit', 'baseball_stolen_base'])
-    curr_list += gen_list(['baseball_stolen_base', 'baseball_pitch', 'baseball_hit'])
+    # curr_list += gen_list(['baseball_hit', 'baseball_pitch', 'baseball_stolen_base'])
+    # curr_list += gen_list(['baseball_pitch', 'baseball_hit', 'baseball_stolen_base'])
+    # curr_list += gen_list(['baseball_stolen_base', 'baseball_pitch', 'baseball_hit'])
 
     with open("file_list_train.txt", "w") as f:
         for c in curr_list:

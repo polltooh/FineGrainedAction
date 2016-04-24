@@ -39,8 +39,8 @@ def get_list(label_name):
     return image, frame_list
 
 def gen_list():
-    label_name = "nba_dunk"
-    query_image, test_frame = get_list("nba_dunk")
+    label_name = "nba_jumpshot"
+    query_image, test_frame = get_list("nba_jumpshot")
     # query_image = get_image(label_name)
     # jumpshot_image = get_image("nba_jumpshot")
     # layup_image = get_image("nba_layup")

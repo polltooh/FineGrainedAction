@@ -21,19 +21,16 @@ FEATURE_COL = 227
 RADIUS = 10.0
 
 FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string('train_log_dir','/home/mscvadmin/action/FineGrainedAction/nn/logs',
-        '''directory wherer to write event logs''')
-tf.app.flags.DEFINE_integer('max_training_iter', 100000,
-        '''the max number of training iteration''')
-tf.app.flags.DEFINE_float('init_learning_rate',0.001,
-        '''initial learning rate''')
-tf.app.flags.DEFINE_string('model_dir', '/home/mscvadmin/action/FineGrainedAction/nn/model_logs','''directory where to save the model''')
+tf.app.flags.DEFINE_string('train_log_dir','logs', '''directory wherer to write event logs''')
+tf.app.flags.DEFINE_integer('max_training_iter', 100000, '''the max number of training iteration''')
+tf.app.flags.DEFINE_float('init_learning_rate',0.001, '''initial learning rate''')
+tf.app.flags.DEFINE_string('model_dir', 'model_logs','''directory where to save the model''')
 
 
 
 def define_graph_config():
     config_proto =  tf.ConfigProto()
-    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.9
+    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.3
     return config_proto
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):

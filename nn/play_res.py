@@ -2,6 +2,9 @@
 import sys
 import cv2
 
+
+res_set = set()
+
 def delete_last_empty_line(s):
     while(len(s) >= 1 and s[-1] == '\n'):
         s = s[:-1]
@@ -18,13 +21,14 @@ def read_file(file_name):
         count = 0
         for i in range(len(data_list)):
             d_l = data_list[i].split(" ")
-            if (int(float(d_l[1])) < 1):
-                # print(d_l[1])
+            if (d_l[0] not in res_set and int(float(d_l[1])) < 5):
                 image = cv2.imread(d_l[0])
-                # cv2.imwrite("temp/%08d.jpg"%(count), image)
+                cv2.imwrite("temp/%08d.jpg"%(count), image)
+                print(count)
                 count = count + 1
                 cv2.imshow("res", image)
                 cv2.waitKey(100)
+                res_set.add(d_l[0])
 
 if __name__ == "__main__":
     if (len(sys.argv) < 2):

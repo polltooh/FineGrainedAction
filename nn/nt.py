@@ -69,11 +69,11 @@ def inference2(data, nn_dim):
 
     return h2_relu
 
-def inference3(infer, batch_size):
+def inference3(infer, nn_dim):
     dim = infer.get_shape().as_list()[1]
     with tf.variable_scope('fc_layer1') as scope:
-        weights = variable_with_weight_decay([dim, 100] , 0.1, 'weights', 0)
-        biases = bias_variable([100])
+        weights = variable_with_weight_decay([dim, nn_dim] , 0.1, 'weights', 0)
+        biases = bias_variable([nn_dim])
         h_fc1 = tf.nn.bias_add(tf.matmul(infer, weights), biases)
     return h_fc1
 

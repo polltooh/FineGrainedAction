@@ -9,17 +9,17 @@ import image_io
 import utility_function as uf
 
 # the dimension of the final layer = feature dim
-NN_DIM = 100
+NN_DIM = 1000
 
 TRAIN_TXT = 'file_list_train_fc7.txt'
 TEST_TXT = 'file_list_test.txt'
 
 TRAIN = True
 SHUFFLE_DATA = True
-BATCH_SIZE = 1
+BATCH_SIZE = 50
 FEATURE_ROW = 227
 FEATURE_COL = 227
-RADIUS = 10.0
+RADIUS = 1.0
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','logs_fc7', '''directory wherer to write event logs''')
@@ -31,7 +31,7 @@ tf.app.flags.DEFINE_string('model_dir', 'model_logs_fc7','''directory where to s
 
 def define_graph_config():
     config_proto =  tf.ConfigProto()
-    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.9
+    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.2
     return config_proto
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):
@@ -103,7 +103,6 @@ def train():
 
             feed_data = {feature_ph: batch_image_v, label_ph: batch_label_v}
             loss_v,_,merged_sum_v = sess.run([tloss, train_op, merged_sum], feed_dict = feed_data) 
-            exit(1)
             if i % 100 == 0:
                 print("i:%d, loss:%f"%(i,loss_v))
                 if i != 0:

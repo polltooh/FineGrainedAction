@@ -123,6 +123,8 @@ def train():
 
 
 def main(argv = None):
+    if not os.path.exists(FLAGS.feature_dir):
+        os.makedirs(FLAGS.feature_dir)
     train()
 
 if __name__ == '__main__':

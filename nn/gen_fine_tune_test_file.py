@@ -1,10 +1,12 @@
+#! /usr/bin/env python
 import os
 import cv2
 import random
 import numpy as np
+import sys
 
-image_dir = "/home/mscvadmin/action/FineGrainedAction/data/test_image/"
-frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/test_video/"
+image_dir = "../data/test_image/"
+frame_dir = "../data/test_video/"
 
 def delete_last_empty_line(s):
     while(len(s) >= 1 and s[-1] == '\n'):
@@ -38,10 +40,10 @@ def get_list(label_name):
     frame_list = get_frame(label_name)
     return image, frame_list
 
-def gen_list():
-    dunk_image, test_frame = get_list("nba_dunk")
+def gen_list(label):
+    _, test_frame = get_list(label)
     
-    with open("file_list_fine_tune_test.txt",  "w") as f:
+    with open("file_list_fine_tune_test_" + label + ".txt",  "w") as f:
         for i in range(len(test_frame)):
             f.write(test_frame[i])
             f.write(" ")
@@ -49,5 +51,9 @@ def gen_list():
             f.write("\n")
 
 if __name__ == "__main__":
-    gen_list()
+    if len(sys.argv) < 2:
+        print("Usage gen_file.py label_name")
+        exit(1)
 
+    label = sys.argv[1]
+    gen_list(label)

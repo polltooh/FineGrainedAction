@@ -6,6 +6,7 @@ import os
 import time
 import cv2
 import image_io
+import sys
 
 # the dimension of the final layer = feature dim
 NN_DIM = 100
@@ -144,6 +145,11 @@ def train():
     write_to_file(name_list, dist_list)
 
 def main(argv = None):
+    if (len(argv) < 2):
+        print("test.py filename.txt")
+        exit(1)
+    global TEST_TXT
+    TEST_TXT = sys.argv[1]
     train()
 
 if __name__ == '__main__':

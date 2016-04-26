@@ -30,7 +30,7 @@ tf.app.flags.DEFINE_string('model_dir', 'model_logs','''directory where to save 
 
 def define_graph_config():
     config_proto =  tf.ConfigProto()
-    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.3
+    config_proto.gpu_options.per_process_gpu_memory_fraction = 0.9
     return config_proto
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):

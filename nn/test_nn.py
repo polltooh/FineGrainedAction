@@ -92,7 +92,7 @@ def train():
 
     net = AlexNet({'data':image_data_ph})
 
-    infer = nt.inference2(net.get_output(), NN_DIM)
+    infer = nt.inference(net.get_output(), NN_DIM)
 
     eva = nt.evaluation(infer, BATCH_SIZE)
 

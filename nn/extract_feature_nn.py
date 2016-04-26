@@ -11,11 +11,11 @@ import image_io
 NN_DIM = 100
 LABEL_DIM = 10
 
-# TRAIN_TXT = 'file_list_fine_tune_train.txt'
-TRAIN_TXT = 'file_list_fine_tune_test.txt'
+TRAIN_TXT = 'file_list_fine_tune_train.txt'
+# TRAIN_TXT = 'file_list_fine_tune_test.txt'
 
 TRAIN = True
-SHUFFLE_DATA = True
+SHUFFLE_DATA = False
 BATCH_SIZE = 1
 FEATURE_ROW = 227
 FEATURE_COL = 227

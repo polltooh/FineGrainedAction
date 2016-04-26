@@ -19,6 +19,7 @@ def delete_last_empty_line(s):
 def get_image(label_name):
     list_name = os.listdir(image_dir + label_name)
     list_name = [f for f in list_name if f[0:2] != '._']
+    list_name = [f for f in list_name if f.endswith(".jpg")]
     list_name = [image_dir + label_name + "/" + f for f in list_name]
     return list_name
 
@@ -47,7 +48,11 @@ def get_frame(label_name):
                    neg_list.append(curr_path + data_list[index])
     return pos_list, neg_list
 
+
+
 def get_list(label_name, suffle_cut_neg = False):
+    """if suffle_cut_neg set to be True, it will cut the negative 
+        sample to be the number of possitive sample"""
     image = get_image(label_name)
     frame_pos, frame_neg = get_frame(label_name)
 
@@ -75,7 +80,7 @@ def gen_list(file_name_list, pos_start_count):
     label_list = list()
 
     for i in range(file_num):
-        image_l, frame_pos_l, frame_neg_l = get_list(file_name_list[i], True)
+        image_l, frame_pos_l, frame_neg_l = get_list(file_name_list[i], False)
         name_list += image_l + frame_pos_l + frame_neg_l
         label_list += [pos_start_count + i] * (len(image_l) + \
                 len(frame_pos_l)) + [0] * len(frame_neg_l)

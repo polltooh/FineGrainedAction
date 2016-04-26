@@ -1,3 +1,6 @@
+import tensorflow as tf
+
+
 def delete_last_empty_line(s):
     end_index = len(s) - 1
     while(end_index >= 0 and s[end_index] == '\n'):
@@ -12,6 +15,14 @@ def file_name_to_int(file_name):
     # in case the filename contains extension
     file_no_ext = file_name.split(".")[0]
     return int(file_no_ext)
+
+def read_binary(filename, dim):
+    bin_file = tf.read_file(filename)
+    bin_tensor = tf.decode_raw(bin_file, tf.float32)
+    # bin_tensor = tf.to_float(bin_tensor)
+    bin_tensor = tf.reshape(bin_tensor,[dim])
+    return bin_tensor
+
 
 def cal_percision(label_list, classify_res):
     assert(len(label_list) == len(classify_res))

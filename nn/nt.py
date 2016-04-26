@@ -69,6 +69,15 @@ def inference2(data, nn_dim):
 
     return h2_relu
 
+def inference3(infer, batch_size):
+    dim = infer.get_shape().as_list()[1]
+    with tf.variable_scope('fc_layer1') as scope:
+        weights = variable_with_weight_decay([dim, 100] , 0.1, 'weights', 0)
+        biases = bias_variable([100])
+        h_fc1 = tf.nn.bias_add(tf.matmul(infer, weights), biases)
+    return h_fc1
+
+
 def evaluation(infer, batch_size):
     feature_1, feature_2 = tf.split(0,2,infer)
     feature_diff = tf.reduce_sum(tf.square(feature_1 - feature_2), 1)

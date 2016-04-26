@@ -11,8 +11,8 @@ import image_io
 NN_DIM = 100
 LABEL_DIM = 10
 
-TRAIN_TXT = 'file_list_fine_tune_train.txt'
-# TEST_TXT = 'file_list_test.txt'
+# TRAIN_TXT = 'file_list_fine_tune_train.txt'
+TRAIN_TXT = 'file_list_fine_tune_test.txt'
 
 TRAIN = True
 SHUFFLE_DATA = True
@@ -37,7 +37,7 @@ def define_graph_config():
     return config_proto
 
 def calculate_iter():
-    with open(TEST_TXT, 'r') as f:
+    with open(TRAIN_TXT, 'r') as f:
         s = f.read()
         s_l = s.split('\n')
         total_num = len(s_l)
@@ -48,9 +48,8 @@ def calculate_iter():
 def write_feature(file_name, feature):
     assert(len(file_name) == len(feature))
     for i in range(len(file_name)):
-        base_name = os.path.basename(file_name[i])
-        base_name.replace(".jpg",".fc7")
-        feature.tofile(FLAGE.feature_dir + base_name)
+        f_name = file_name[i].replace(".jpg",".fc7")
+        feature.tofile(f_name)
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):
     
@@ -59,25 +58,15 @@ def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE
         next_line, [tf.constant([], dtype=tf.string),
             tf.constant([], dtype = tf.int32)], field_delim=" ")
     
-    # batch_query_image, batch_label = tf.train.batch(
-    #         [query_image_name, label], batch_size=batch_size)
-
     reverse_channel = True  # for pre-trained purpose
     query_tensor = image_io.read_image(query_image_name, reverse_channel,   
             FEATURE_ROW, FEATURE_COL)
 
-    if SHUFFLE_DATA:
-        min_after_dequeue = 100
-        capacity = min_after_dequeue + 3 * batch_size
-        batch_query_image, batch_label = tf.train.shuffle_batch(
-                [query_tensor, label], batch_size = batch_size, capacity=capacity,
-                min_after_dequeue=min_after_dequeue)
-    else:
-        batch_query_image, batch_label = tf.train.batch(
-                [query_tensor, label], batch_size=batch_size)
+    batch_query_image, batch_label, batch_image_name = tf.train.batch(
+            [query_tensor, label, query_image_name], batch_size=batch_size)
     
     
-    return batch_query_image, batch_label
+    return batch_query_image, batch_label, batch_image_name
 
 
 def train():
@@ -86,9 +75,7 @@ def train():
     train_filenamequeue=tf.train.string_input_producer([TRAIN_TXT], shuffle=SHUFFLE_DATA)
 
     line_reader = tf.TextLineReader()
-    train_batch_image, train_batch_label = filequeue_to_batch_data(train_filenamequeue, line_reader)
-
-    train_batch_label_one_hot = dense_to_one_hot(train_batch_label, LABEL_DIM)
+    train_batch_image, train_batch_label, batch_image_name = filequeue_to_batch_data(train_filenamequeue, line_reader)
 
     global_step = tf.Variable(0, name = 'global_step', trainable = False)
     image_data_ph = tf.placeholder(tf.float32, shape = (BATCH_SIZE, FEATURE_ROW, FEATURE_COL, 3))
@@ -115,16 +102,14 @@ def train():
 
     if TRAIN:
         for i in xrange(FLAGS.max_training_iter):
-            batch_image_v, batch_label_v = sess.run([    
-                train_batch_image, train_batch_label_one_hot])
-
-            feed_data = {image_data_ph: batch_image_v, label_ph: batch_label_v}
+            batch_image_v, batch_image_name_v = sess.run([train_batch_image, batch_image_name])
+            feed_data = {image_data_ph: batch_image_v}
             infer_v = sess.run(infer, feed_dict = feed_data) 
-
+            write_feature(batch_image_name_v, infer_v)
 
 def main(argv = None):
-    if not os.path.exists(FLAGS.feature_dir):
-        os.makedirs(FLAGS.feature_dir)
+    # if not os.path.exists(FLAGS.feature_dir):
+    #     os.makedirs(FLAGS.feature_dir)
     train()
 
 if __name__ == '__main__':

@@ -10,5 +10,6 @@ nn/temp
 *.jpg
 *.pyc
 *.txt
+*.fc7
 nn/kaffe/
 old

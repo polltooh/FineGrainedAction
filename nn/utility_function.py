@@ -1,0 +1,40 @@
+def delete_last_empty_line(s):
+    end_index = len(s) - 1
+    while(end_index >= 0 and s[end_index] == '\n'):
+        end_index -= 1
+    s = s[:end_index + 1]
+    return s
+
+def file_name_to_int(file_name):
+    # seperate the file name from the path.
+    # assume the last one is the filename
+    file_name = file_name.split("/")[-1]
+    # in case the filename contains extension
+    file_no_ext = file_name.split(".")[0]
+    return int(file_no_ext)
+
+def cal_percision(label_list, classify_res):
+    assert(len(label_list) == len(classify_res))
+    true_positive_count = 0.0
+    false_positive_count = 0.0
+    for i in range(len(label_list)):
+        if classify_res[i] == True:
+            if label_list[i] == True:
+                true_positive_count += 1
+            else:
+                false_positive_count += 1
+
+    return true_positive_count/(true_positive_count + false_positive_count)
+
+def cal_recall(label_list, classify_res):
+    assert(len(label_list) == len(classify_res))
+    true_positive_count = 0.0
+    false_negative_count = 0.0
+    for i in range(len(label_list)):
+        if label_list[i] == True:
+            if classify_res[i] == True:
+                true_positive_count += 1
+            else:
+                false_negative_count += 1
+
+    return true_positive_count/(true_positive_count + false_negative_count)

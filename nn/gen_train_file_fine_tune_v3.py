@@ -6,6 +6,8 @@ import numpy as np
 # image_dir = "/home/mscvadmin/action/FineGrainedAction/data/image/"
 # frame_dir = "/home/mscvadmin/action/FineGrainedAction/data/video/"
 
+random.seed(10)
+
 label_dict = {
     'nba_neg':'0',
     'nba_dunk':'1',
@@ -98,6 +100,12 @@ def gen_list(file_name_list):
         label_neg_list += label_dict[file_name_list[i]] * len(frame_pos_d[i])
 
     time_num = 5
+
+    pos_img_index = range(len(image_d[0]))
+    pos_img_index = pos_img_index * time_num
+    pos_img_index = random.sample(pos_img_index, time_num * len(image_d[0]))
+    np_pos_img_index = np.reshape(np.array(pos_img_index), (len(image_d[0]), time_num))
+
     pos_index = range(len(frame_pos_d[0]))
     pos_index = pos_index * time_num
     pos_index = random.sample(pos_index, time_num * len(image_d[0]))
@@ -111,9 +119,14 @@ def gen_list(file_name_list):
     file_list = list()
     for i in range(len(image_d[0])):
         for j in range(time_num):
+            curr_s = image_d[0][i] + " " + image_d[0][np_pos_img_index[i][j]] + \
+                " " + label_pos + " " + label_pos + " 1\n"
+            file_list.append(curr_s)
+
             curr_s = image_d[0][i] + " " + frame_pos_d[0][np_pos_index[i][j]] + \
                 " " + label_pos + " " + label_pos + " 1\n"
             file_list.append(curr_s)
+
             curr_s = image_d[0][i] + " " + neg_full[np_neg_index[i][j]] + \
                 " " + label_pos + " " + label_neg_list[np_neg_index[i][j]] + " 0\n"
             file_list.append(curr_s)
@@ -137,10 +150,9 @@ if __name__ == "__main__":
     curr_list += gen_list(['baseball_pitch', 'baseball_hit', 'baseball_stolen_base'])
     curr_list += gen_list(['baseball_stolen_base', 'baseball_pitch', 'baseball_hit'])
 
-    random.seed(10)
     random.shuffle(curr_list)
 
-    with open("file_list_train_v3.txt", "w") as f:
+    with open("file_list_fine_tune_train_v3.txt", "w") as f:
         for c in curr_list:
             f.write(c)
 

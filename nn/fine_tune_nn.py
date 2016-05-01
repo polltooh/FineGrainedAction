@@ -9,7 +9,7 @@ import image_io
 
 # the dimension of the final layer = feature dim
 NN_DIM = 100
-LABEL_DIM = 10
+LABEL_DIM = 3
 
 TRAIN_TXT = 'file_list_fine_tune_train.txt'
 # TEST_TXT = 'file_list_test.txt'

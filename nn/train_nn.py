@@ -26,8 +26,6 @@ tf.app.flags.DEFINE_integer('max_training_iter', 100000, '''the max number of tr
 tf.app.flags.DEFINE_float('init_learning_rate',0.001, '''initial learning rate''')
 tf.app.flags.DEFINE_string('model_dir', 'model_logs','''directory where to save the model''')
 
-
-
 def define_graph_config():
     config_proto =  tf.ConfigProto()
     config_proto.gpu_options.per_process_gpu_memory_fraction = 0.9

@@ -34,6 +34,30 @@ def inference(data, nn_dim):
 
     return h_fc
 
+def inference2(data, nn_dim):
+    leaky_param = tf.constant(0.01, shape = [1], name='leaky_params')
+    dim = 1
+    for d in data.get_shape().as_list()[1:]:
+        dim *= d
+
+    with tf.variable_scope('fc_1') as scope:
+        weights = variable_with_weight_decay([dim, 1000] , 1e-3, 'weights', 0)
+        biases = bias_variable([1000])
+        h_fc1 = tf.nn.bias_add(tf.matmul(data, weights), biases)
+        h1_relu = add_leaky_relu(h_fc1,leaky_param)
+
+    with tf.variable_scope('fc_2') as scope:
+        weights = variable_with_weight_decay([1000, 200] , 1e-3, 'weights', 0)
+        biases = bias_variable([200])
+        h_fc2 = tf.nn.bias_add(tf.matmul(h1_relu, weights), biases)
+        h2_relu = add_leaky_relu(h_fc2,leaky_param)
+
+    with tf.variable_scope('fc_3') as scope:
+        weights = variable_with_weight_decay([200, nn_dim] , 1e-3, 'weights', 0)
+        biases = bias_variable([nn_dim])
+        h_fc3 = tf.nn.bias_add(tf.matmul(h2_relu, weights), biases)
+    return h_fc3
+
 def evaluation(infer):
     index = tf.argmax(infer, 1)
     return index

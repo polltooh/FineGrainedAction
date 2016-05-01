@@ -1,5 +1,12 @@
 import tensorflow as tf
-from bvlc_alexnet_fc7 import AlexNet
+
+LAYER = 5
+
+if LAYER == 7:
+    from bvlc_alexnet_fc7 import AlexNet
+elif LAYER == 5:
+    from bvlc_alexnet_cn5 import AlexNet
+    
 import fine_tune_nt
 import numpy as np
 import os
@@ -11,8 +18,8 @@ import image_io
 NN_DIM = 100
 LABEL_DIM = 10
 
-# TRAIN_TXT = 'file_list_fine_tune_train.txt'
-TRAIN_TXT = 'file_list_fine_tune_test_nba_dunk.txt'
+TRAIN_TXT = 'file_list_fine_tune_train.txt'
+# TRAIN_TXT = 'file_list_fine_tune_test_nba_dunk.txt'
 
 TRAIN = True
 SHUFFLE_DATA = False
@@ -28,7 +35,7 @@ tf.app.flags.DEFINE_integer('max_training_iter', 10000,
 tf.app.flags.DEFINE_float('init_learning_rate',0.001,
         '''initial learning rate''')
 tf.app.flags.DEFINE_string('model_dir', 'fine_tune_nn_model_logs','''directory where to save the model''')
-tf.app.flags.DEFINE_string('feature_dir', 'f7_dir/','''saved feature dir''')
+# tf.app.flags.DEFINE_string('feature_dir', 'f7_dir/','''saved feature dir''')
 
 
 def define_graph_config():
@@ -48,7 +55,10 @@ def calculate_iter():
 def write_feature(file_name, feature):
     assert(len(file_name) == len(feature))
     for i in range(len(file_name)):
-        f_name = file_name[i].replace(".jpg",".fc7")
+        if LAYER == 7:
+            f_name = file_name[i].replace(".jpg",".fc7")
+        elif LAYER == 5:
+            f_name = file_name[i].replace(".jpg",".cn5")
         feature.tofile(f_name)
 
 def filequeue_to_batch_data(filename_queue, line_reader, batch_size = BATCH_SIZE):
@@ -85,6 +95,12 @@ def train():
 
     infer = net.get_output()
 
+    new_dim = 1 
+    for d in infer.get_shape().as_list()[1:]:
+        new_dim *= d
+
+    infer_reshape = tf.reshape(infer, [-1,new_dim])
+
     for var in tf.trainable_variables():
         tf.histogram_summary(var.op.name, var)
     merged_sum = tf.merge_all_summaries()
@@ -104,7 +120,7 @@ def train():
         for i in xrange(FLAGS.max_training_iter):
             batch_image_v, batch_image_name_v = sess.run([train_batch_image, batch_image_name])
             feed_data = {image_data_ph: batch_image_v}
-            infer_v = sess.run(infer, feed_dict = feed_data) 
+            infer_v = sess.run(infer_reshape, feed_dict = feed_data) 
             write_feature(batch_image_name_v, infer_v)
 
 def main(argv = None):

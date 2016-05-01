@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+from time import gmtime, strftime
 
 def delete_last_empty_line(s):
     end_index = len(s) - 1
@@ -49,3 +49,8 @@ def cal_recall(label_list, classify_res):
                 false_negative_count += 1
 
     return true_positive_count/(true_positive_count + false_negative_count)
+
+def write_to_logs(file_name, write_string):
+    time_s = strftime("%Y-%m-%d %H:%M:%S ", gmtime())
+    with open (file_name, "a+") as f:
+        f.write(time_s + write_string + "\n")

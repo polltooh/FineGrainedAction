@@ -1,6 +1,7 @@
 import tensorflow as tf
 from bvlc_alexnet_fc7 import AlexNet
 import fine_tune_nt
+import utility_function as uf
 import nt
 import numpy as np
 import os
@@ -23,13 +24,15 @@ FEATURE_COL = 227
 FEATURE_DIM = 4096
 
 FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string('train_log_dir','fine_tune_nn_logs_v3',
+tf.app.flags.DEFINE_string('train_log_dir','fine_tune_nn_logs_v3/',
         '''directory wherer to write event logs''')
+tf.app.flags.DEFINE_string('output_log','logs.txt',
+        '''directory wherer to write the output logs''')
 tf.app.flags.DEFINE_integer('max_training_iter', 100000,
         '''the max number of training iteration''')
 tf.app.flags.DEFINE_float('init_learning_rate',0.001,
         '''initial learning rate''')
-tf.app.flags.DEFINE_string('model_dir', 'fine_tune_nn_model_logs_v3','''directory where to save the model''')
+tf.app.flags.DEFINE_string('model_dir', 'fine_tune_nn_model_logs_v3/','''directory where to save the model''')
 
 def define_graph_config():
     config_proto =  tf.ConfigProto()
@@ -136,18 +139,14 @@ def train():
         for i in xrange(FLAGS.max_training_iter):
             batch_image_v, batch_label_v, batch_label_3_v = sess.run([    
                 train_batch_image, train_batch_label_one_hot, train_batch_label_3])
-
+        
             feed_data = {image_data_ph: batch_image_v, label_ph: batch_label_v, label_ph_3: batch_label_3_v}
             loss_1_v, loss_2_v, loss_v, _ = sess.run([loss_1, loss_2, loss, train_op], feed_dict = feed_data) 
             if i % 100 == 0:
-                print("i:%d, loss:%f"%(i,loss_v))
-            print(loss_1_v)
-            print(loss_2_v)
-            print(batch_label_v)
-            print(batch_label_3_v)
-            if (i == 2):
-                exit(1)
-            if i != 0 and i % 500 == 0:
+                output_string =("i:%d, loss1:%f loss2:%f loss3:%f"%(i,loss_1_v, loss_2_v, loss_v))
+                uf.write_to_logs(FLAGS.train_log_dir + FLAGS.output_log,  output_string)
+                print(output_string)
+            if i != 0 and i % 1000 == 0:
                 curr_time = time.strftime("%Y%m%d_%H%M")
                 model_name = FLAGS.model_dir + '/' + curr_time + '_iter_' + str(i) + '_model.ckpt'
                 saver.save(sess,FLAGS.model_dir + '/' + curr_time + 'model.ckpt')

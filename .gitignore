@@ -1,5 +1,9 @@
 data/bing_key.txt
 data/build/
+data/image/
+data/video
+data/test_image/
+data/test_video/
 nn/model_logs
 nn/logs
 nn/fine_tune_nn_logs

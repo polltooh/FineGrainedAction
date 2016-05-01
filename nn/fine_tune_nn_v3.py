@@ -20,7 +20,7 @@ BATCH_SIZE = 25
 RADIUS = 10
 FEATURE_ROW = 227
 FEATURE_COL = 227
-FEATURE_DIM = 409.6
+FEATURE_DIM = 4096
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','fine_tune_nn_logs_v3',

@@ -16,10 +16,11 @@ TRAIN_TXT = 'file_list_fine_tune_train_v3.txt'
 
 TRAIN = True
 SHUFFLE_DATA = True
-BATCH_SIZE = 1
+BATCH_SIZE = 25
 RADIUS = 10
 FEATURE_ROW = 227
 FEATURE_COL = 227
+FEATURE_DIM = 409.6
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_log_dir','fine_tune_nn_logs_v3',
@@ -104,7 +105,9 @@ def train():
     infer_1 = fine_tune_nt.inference(net.get_output(), LABEL_DIM)
     loss_1 = fine_tune_nt.loss(infer_1, label_ph)
 
-    loss_2 = nt.triplet_loss(net.get_output(), label_ph_3, BATCH_SIZE, RADIUS)
+    loss_2_org = nt.triplet_loss(net.get_output(), label_ph_3, BATCH_SIZE, RADIUS)
+    loss_2 = tf.div(loss_2_org, FEATURE_DIM)
+
     loss = loss_1 + loss_2
 
     tf.scalar_summary('loss', loss)
@@ -135,12 +138,15 @@ def train():
                 train_batch_image, train_batch_label_one_hot, train_batch_label_3])
 
             feed_data = {image_data_ph: batch_image_v, label_ph: batch_label_v, label_ph_3: batch_label_3_v}
-            loss_v,_ = sess.run([loss, train_op], feed_dict = feed_data) 
+            loss_1_v, loss_2_v, loss_v, _ = sess.run([loss_1, loss_2, loss, train_op], feed_dict = feed_data) 
             if i % 100 == 0:
                 print("i:%d, loss:%f"%(i,loss_v))
+            print(loss_1_v)
+            print(loss_2_v)
             print(batch_label_v)
             print(batch_label_3_v)
-            exit(1)
+            if (i == 2):
+                exit(1)
             if i != 0 and i % 500 == 0:
                 curr_time = time.strftime("%Y%m%d_%H%M")
                 model_name = FLAGS.model_dir + '/' + curr_time + '_iter_' + str(i) + '_model.ckpt'

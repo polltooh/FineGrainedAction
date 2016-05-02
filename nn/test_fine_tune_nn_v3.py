@@ -10,9 +10,9 @@ import sys
 
 # the dimension of the final layer = feature dim
 NN_DIM = 100
-LABEL_DIM = 10
+LABEL_DIM = 12
 
-TEST_TXT = 'file_list_fine_tune_test.txt'
+TEST_TXT = 'file_list_fine_tune_test_v3.txt'
 # TEST_TXT = 'file_list_test.txt'
 
 SHUFFLE_DATA = False
@@ -21,16 +21,12 @@ FEATURE_ROW = 227
 FEATURE_COL = 227
 
 FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string('train_log_dir','fine_tune_nn_logs/',
-        '''directory wherer to write event logs''')
-tf.app.flags.DEFINE_integer('max_training_iter', 1000,
+tf.app.flags.DEFINE_string('model_dir', 'fine_tune_nn_model_logs_v3/','''directory where to save the model''')
+tf.app.flags.DEFINE_integer('max_training_iter', 100000,
         '''the max number of training iteration''')
-tf.app.flags.DEFINE_float('init_learning_rate',0.001,
-        '''initial learning rate''')
-tf.app.flags.DEFINE_string('model_dir', 'fine_tune_nn_model_logs','''directory where to save the model''')
 
 def write_to_file(name_list, value):
-    with open("fine_tune_test_res.txt", "w") as f:
+    with open("fine_tune_test_res_v3.txt", "w") as f:
         for i in range(len(name_list)):
             f.write(name_list[i])
             f.write(" ")
@@ -42,7 +38,6 @@ def calculate_iter():
         s = f.read()
         s_l = s.split('\n')
         total_num = len(s_l)
-        
         if (s_l[total_num - 1] == ""): 
             FLAGS.max_training_iter = int(total_num / BATCH_SIZE) - 1
         else:
@@ -111,9 +106,9 @@ def train():
 
     net = AlexNet({'data':image_data_ph})
 
-    infer = fine_tune_nt.inference(net.get_output(), LABEL_DIM)
+    infer_1 = fine_tune_nt.inference(net.get_output(), LABEL_DIM)
 
-    eva_index = fine_tune_nt.evaluation(infer)
+    eva_index = fine_tune_nt.evaluation(infer_1)
 
     saver = tf.train.Saver()
 

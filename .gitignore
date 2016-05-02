@@ -10,9 +10,9 @@ nn/fine_tune_nn_logs
 nn/fine_tune_nn_model_logs
 nn/temp
 *.npy
+*.pyc
 *.mp4
 *.jpg
-*.pyc
 *.txt
 *.fc7
 nn/kaffe/

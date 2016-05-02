@@ -61,7 +61,7 @@ def read_triplet_res_file(file_name, res_list, radius):
 
 if __name__ == "__main__":
     if (len(sys.argv) < 3):
-        print("Usage: cal_accuracy.py res_file_name.txt label_file.txt")
+        print("Usage: cal_accuracy_v3.py res_file_name.txt label_file.txt")
         exit(1)
 
     res_file_name = sys.argv[1]
@@ -75,9 +75,9 @@ if __name__ == "__main__":
         if (res_name[i] != label_name[i]):
             print("n1 is %s n2 is %s"%(n1,n2))
             exit(1)
-    ave_precision = uf.cal_ave_precision(label_list, res_list, 10)
-    con_mat = uf.cal_confusion_matrix(label_list, res_list, 10)
-    np.save("ave_precision.npy", ave_precision)
-    np.save("con_mat.npy", con_mat)
-    print(uf.cal_ave_precision(label_list, res_list, 10))
-    print(uf.cal_confusion_matrix(label_list, res_list, 10))
+    ave_precision = uf.cal_ave_precision(label_list, res_list, 12)
+    con_mat = uf.cal_confusion_matrix(label_list, res_list, 12)
+    np.save("ave_precision_v3.npy", ave_precision)
+    np.save("con_mat_v3.npy", con_mat)
+    print(uf.cal_ave_precision(label_list, res_list, 12))
+    print(uf.cal_confusion_matrix(label_list, res_list, 12))

@@ -1,5 +1,6 @@
 import tensorflow as tf
 from time import gmtime, strftime
+import numpy as np
 
 def delete_last_empty_line(s):
     end_index = len(s) - 1
@@ -34,8 +35,8 @@ def cal_percision(label_list, classify_res):
                 true_positive_count += 1
             else:
                 false_positive_count += 1
-
-    return true_positive_count/(true_positive_count + false_positive_count)
+    precision = true_positive_count/(true_positive_count + false_positive_count)
+    return precision
 
 def cal_recall(label_list, classify_res):
     assert(len(label_list) == len(classify_res))
@@ -47,8 +48,37 @@ def cal_recall(label_list, classify_res):
                 true_positive_count += 1
             else:
                 false_negative_count += 1
+    recall = true_positive_count/(true_positive_count + false_negative_count)
+    return recall
 
-    return true_positive_count/(true_positive_count + false_negative_count)
+def cal_ave_precision(label_list, classify_res, label_num):
+    assert(len(label_list) == len(classify_res))
+    file_len = len(label_list)
+    np_label_sep = np.zeros((label_num, file_len), dtype = bool)
+    np_res_sep = np.zeros((label_num,file_len), dtype = bool)
+    for i in range(file_len):
+        np_label_sep[label_list[i]][i] = True
+        np_res_sep[classify_res[i]][i] = True
+
+    np_precision = np.zeros(label_num)
+    precision_list = label_num * [0.0]
+
+    for i in range(label_num):
+        label_sep = np_label_sep[i].tolist()
+        res_sep = np_res_sep[i].tolist()
+        np_precision[i] = cal_percision(label_sep, res_sep)
+        
+    avg_precision = np.average(np_precision)
+    print(np_precision)
+    return avg_precision
+
+def cal_confusion_matrix(label_list, classify_res, label_num):
+    assert(len(label_list) == len(classify_res))
+    file_len = len(label_list)
+    con_mat = np.zeros((label_num, label_num), dtype = int)
+    for i in range(file_len):
+        con_mat[label_list[i]][classify_res[i]] += 1
+    return con_mat
 
 def write_to_logs(file_name, write_string):
     time_s = strftime("%Y-%m-%d %H:%M:%S ", gmtime())

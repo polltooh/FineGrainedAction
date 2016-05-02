@@ -17,6 +17,7 @@ TRAIN_TXT = 'file_list_fine_tune_train_v3.txt'
 
 TRAIN = True
 SHUFFLE_DATA = True
+RESTORE = True
 BATCH_SIZE = 25
 RADIUS = 10
 FEATURE_ROW = 227
@@ -127,11 +128,21 @@ def train():
     config_proto = define_graph_config()
     sess = tf.Session(config = config_proto)
 
+
     if TRAIN:
         writer_sum = tf.train.SummaryWriter(FLAGS.train_log_dir,graph_def = sess.graph_def)
 
     init_op = tf.initialize_all_variables()
     sess.run(init_op)
+    
+    if RESTORE:
+        ckpt = tf.train.get_checkpoint_state(FLAGS.model_dir)
+        print(ckpt.all_model_checkpoint_paths[-1])
+        if ckpt and ckpt.all_model_checkpoint_paths[-1]:
+            saver.restore(sess, ckpt.all_model_checkpoint_paths[-1])
+        else:
+            print('no check point, start from begining')
+
     coord = tf.train.Coordinator()
     threads = tf.train.start_queue_runners(coord = coord, sess = sess)
 

@@ -96,7 +96,7 @@ int main(int argc, char* argv[]){
             std::string image_file_name = image_dir_name + name_list[index];
             cv::Mat image = cv::imread(image_file_name);
             cv::Mat resized_image;
-            cv::resize(image, resized_image, cv::Size(image.rows * 2, image.cols * 2));
+            cv::resize(image, resized_image, cv::Size(image.rows * 1.5, image.cols * 1.5));
             utility::AddText(resized_image, label_name, label_list[index]);
             utility::AddFrameText(resized_image, index, int(name_list.size() - 1));
             
